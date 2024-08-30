@@ -1,0 +1,36 @@
+﻿@page "/FinalQuestion"
+@layout CustomLayout
+@inject IJSRuntime JS
+
+<br />
+<br />
+<div class="container">
+    <div class="row my-4">
+        <div class="col-md-12">
+            <h2 class="title-3">
+                MUCHAS GRACIAS POR SU RESPUESTA.
+            </h2>
+        </div>
+    </div>
+    <div class="alert alert-info alert-dismissible fade show d-flex align-items-center" role="alert" style="border-radius: 10px;">
+        <!-- Imagen al lado del mensaje -->
+        <div style="flex-shrink: 0; margin-right: 15px;">
+            <img src="https://prodiel.com/wp-content/uploads/2018/11/i-gracias-encuesta-300x300.png" alt="Imagen Fuera de Horario" style="max-width: 350px; height: auto;">
+        </div>
+
+        <!-- Mensaje de alerta -->
+        <div>
+            <button type="submit" class="btn btn-danger btn-lg ml-auto" @onclick="FormClickRecargar" style="font-size: 1.5em; padding: 15px 30px;">
+                <span aria-hidden="true">Ir al Inicio...</span>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+@code {
+    private async Task FormClickRecargar()
+    {
+        await JS.InvokeVoidAsync("redirectToUrl", "https://sedeelectronica.sic.gov.co/");
+    }
+}

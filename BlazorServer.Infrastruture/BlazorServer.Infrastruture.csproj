@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Interfaces\" />
+    <Folder Include="Components\Services\" />
+    <Folder Include="ExternalServices\Interface\" />
+    <Folder Include="ExternalServices\Service\" />
+    <Folder Include="InternalServices\Interface\" />
+    <Folder Include="InternalServices\Service\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorServer.Common\BlazorServer.Common.csproj" />
+    <ProjectReference Include="..\BlazorServer.DTO\BlazorServer.DTO.csproj" />
+  </ItemGroup>
+
+</Project>

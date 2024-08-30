@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlazorServer.Common\BlazorServer.Common.csproj" />
+    <ProjectReference Include="..\BlazorServer.DataAccess\BlazorServer.DataAccess.csproj" />
+    <ProjectReference Include="..\BlazorServer.DTO\BlazorServer.DTO.csproj" />
+    <ProjectReference Include="..\BlazorServer.Infrastruture\BlazorServer.Infrastruture.csproj" />
+  </ItemGroup>
+
+</Project>
