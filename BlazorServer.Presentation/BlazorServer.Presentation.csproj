@@ -22,4 +22,8 @@
     <ProjectReference Include="..\BlazorServer.DTO\BlazorServer.DTO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\dist\images\imgSamo\" />
+  </ItemGroup>
+
 </Project>

@@ -4,7 +4,162 @@
 <PageTitle>Samo</PageTitle>
 
 
+<div class="table-responsive dataTables_wrapper dt-bootstrap4">
+    <table id="customerTable" class="table table-hover w-100 dataTable">
+        <thead class="thead-light outline-badge-primary">
+            <tr>
+                <th>Clase Entidad</th>
+                <th>Tipo Persona</th>
+                <th>Tipo Documento</th>
+                <th>Nro Documento</th>
+                <th>Nombre</th>
+                <th>Fecha Creación</th>
+                <th>Estado Actual</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="list form-check-all">
+            <tr>
+                <td class="status text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion2" class="accordion-alt" role="tablist">
+                                <div class="mb-2">
+                                    <h6 class="mb-0">
+                                        <a class="text-uppercase d-block border collapsed" data-toggle="collapse" href="#collapse1" aria-expanded="false" aria-controls="collapse1">Clase Entidad</a>
+                                    </h6>
+                                    <div id="collapse1" class="collapse" role="tabpanel" data-parent="#accordion2" style="">
+                                        <div class="card-body">
+                                            <div class="card-content">
+                                                <div class="card-body p-1">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="tasks">
+                                                                <li class="outline-badge-primary border-0 d-flex py-3 px-2 zoom">
+                                                                    <label>
+                                                                        <span class="mb-0 ml-2 my-auto font-w-600">Entidad 1</span>
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="Genero text-center"><span class="badge bg-danger-subtle text-danger badge-border">Persona Natural</span></td>
+                <td class="IdentificacionPaciente">Cédula</td>
+                <td class="Documento">12345678</td>
+                <td class="NombreEntidad">Juan Pérez</td>
+                <td class="FechaCreacion text-center"><span class="badge badge-label bg-warning"><i class="mdi mdi-circle-medium"></i>01/01/2024</span></td>
+                <td class="status text-center"><span class="badge badge-success">Activo</span></td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-info btn-icon waves-effect waves-light"><i class="las la-user-alt"></i></button>
+                        <button type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light"><i class="las la-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="status text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion2" class="accordion-alt" role="tablist">
+                                <div class="mb-2">
+                                    <h6 class="mb-0">
+                                        <a class="text-uppercase d-block border collapsed" data-toggle="collapse" href="#collapse2" aria-expanded="false" aria-controls="collapse2">Clase Entidad</a>
+                                    </h6>
+                                    <div id="collapse2" class="collapse" role="tabpanel" data-parent="#accordion2" style="">
+                                        <div class="card-body">
+                                            <div class="card-content">
+                                                <div class="card-body p-1">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="tasks">
+                                                                <li class="outline-badge-primary border-0 d-flex py-3 px-2 zoom">
+                                                                    <label>
+                                                                        <span class="mb-0 ml-2 my-auto font-w-600">Entidad 2</span>
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="Genero text-center"><span class="badge bg-danger-subtle text-danger badge-border">Persona Jurídica</span></td>
+                <td class="IdentificacionPaciente">RUC</td>
+                <td class="Documento">87654321</td>
+                <td class="NombreEntidad">Empresa ABC</td>
+                <td class="FechaCreacion text-center"><span class="badge badge-label bg-warning"><i class="mdi mdi-circle-medium"></i>02/02/2024</span></td>
+                <td class="status text-center"><span class="badge badge-danger">Inactivo</span></td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-info btn-icon waves-effect waves-light"><i class="las la-user-alt"></i></button>
+                        <button type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light"><i class="las la-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="status text-center">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="accordion2" class="accordion-alt" role="tablist">
+                                <div class="mb-2">
+                                    <h6 class="mb-0">
+                                        <a class="text-uppercase d-block border collapsed" data-toggle="collapse" href="#collapse3" aria-expanded="false" aria-controls="collapse3">Clase Entidad</a>
+                                    </h6>
+                                    <div id="collapse3" class="collapse" role="tabpanel" data-parent="#accordion2" style="">
+                                        <div class="card-body">
+                                            <div class="card-content">
+                                                <div class="card-body p-1">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <ul class="tasks">
+                                                                <li class="outline-badge-primary border-0 d-flex py-3 px-2 zoom">
+                                                                    <label>
+                                                                        <span class="mb-0 ml-2 my-auto font-w-600">Entidad 3</span>
+                                                                    </label>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="Genero text-center"><span class="badge bg-danger-subtle text-danger badge-border">Persona Natural</span></td>
+                <td class="IdentificacionPaciente">Cédula</td>
+                <td class="Documento">11223344</td>
+                <td class="NombreEntidad">María García</td>
+                <td class="FechaCreacion text-center"><span class="badge badge-label bg-warning"><i class="mdi mdi-circle-medium"></i>03/03/2024</span></td>
+                <td class="status text-center"><span class="badge badge-success">Activo</span></td>
+                <td>
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-outline-info btn-icon waves-effect waves-light"><i class="las la-user-alt"></i></button>
+                        <button type="button" class="btn btn-outline-danger btn-icon waves-effect waves-light"><i class="las la-trash-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
-    <h1>SAMO WEB!!</h1>
 
 

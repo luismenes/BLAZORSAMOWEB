@@ -11,11 +11,169 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="css/site.css" rel="stylesheet" />
+
+    <!-- Preconnect para optimización de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz@0,6..12;1,6..12&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- COMPONENTES -->
+    <link href="~/Plantilla/assets/libs/fullcalendar/main.min.css" rel="stylesheet" />
+    <link href="~/Plantilla/assets/libs/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Plantilla/assets/libs/select2/select2-bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Plantilla/assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" />
+
+    <!-- Layout config Js -->
+    <script src="~/Plantilla/assets/js/layout.js"></script>
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="~/dist/vendors/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/dist/vendors/jquery-ui/jquery-ui.theme.min.css" />
+    <link rel="stylesheet" href="~/dist/vendors/simple-line-icons/css/simple-line-icons.css" />
+    <link rel="stylesheet" href="~/dist/vendors/flags-icon/css/flag-icon.min.css" />
+
+    <!-- Icons CSS -->
+    <link href="~/Plantilla/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="~/dist/vendors/datatable/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/dist/vendors/datatable/buttons/css/buttons.bootstrap4.min.css" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/main.css" />
+    <link href="~/Plantilla/assets/css/custom.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Toastr -->
+    <script src="~/Content/ShowMessageToast/toast.min.js"></script>
+    <link href="~/Content/ShowMessageToast/toastr.min.css" rel="stylesheet" />
+    <script src="~/Content/ShowMessageToast/toastr2.min.js"></script>
+
+    <!-- Otros recursos -->
+    <script src="~/Content/Site/JsTimeMaster.js"></script>
+    <link href="~/Plantilla/assets/css/appCopia.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/fileUpload/dropify.min.css" rel="stylesheet" />
+    <link href="~/Content/fileUpload/css/pages/user-card.css" rel="stylesheet" />
+
+
+
+    <style>
+        html, body {
+            font-family: 'Noto Sans',sans-serif !important;
+            line-height: normal;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .border-b1 {
+            border-bottom: 1px solid;
+        }
+
+        #notiContent {
+            height: 200px;
+            overflow: auto;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        /* The slider */
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 16px;
+                width: 16px;
+                left: 2px;
+                bottom: 2px;
+                background-color: white;
+                -webkit-transition: .4s;
+                transition: .4s;
+            }
+
+        input:checked + .slider {
+            background-color: #4e73df;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #4e73df;
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 30px;
+        }
+
+            .slider.round:before {
+                border-radius: 50%;
+            }
+
+        .btn-redon {
+            border-radius: 100%;
+            height: 2.5rem;
+            width: 2.5rem;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .input-group-append {
+            cursor: pointer;
+        }
+
+        /* Estilo para los selects con select2 */
+        .select2-container {
+            width: 100%; /* Ancho del 100% para que sea responsive */
+            max-width: 100%; /* Para asegurarse de que no exceda el contenedor padre */
+        }
+
+        .no-input {
+            pointer-events: none; /* Evita que se pueda hacer clic en el TextBox */
+            background-color: #e5e4e4 !important; /* Cambia el color de fondo para indicar que no se puede editar */
+            opacity: 1; /* Ajusta la opacidad para que el texto no se vea demasiado desvanecido */
+        }
+    </style>
+    <!-- Custom CSS and Libraries -->
+    <link href="~/dist/assets2/all.min.css" rel="stylesheet" />
+    <link href="~/dist/assets2/apexcharts.min.css" rel="stylesheet" />
+    <link href="~/dist/assets2/css/style.css" rel="stylesheet" />
+    <link href="~/Content/daterangepicker/datepicker/daterangepicker.css" rel="stylesheet" />
+
     <link href="BlazorServer.Presentation.styles.css" rel="stylesheet" />
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+
+
+
+
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body>
@@ -35,9 +193,74 @@
     <script src="_framework/blazor.server.js"></script>
     <script src="js/auth.js"></script>
     <script src="_content/CurrieTechnologies.Razor.SweetAlert2/sweetAlert2.min.js"></script>
-    <script src="js/redirect.js"></script>
-    <script src="~/js/clictocall.js"></script>
-    <script src="~/js/infobip/0.2.7/infobip.js"></script>
+    <!-- START: Template JS -->
+    <script src="~/dist/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="~/dist/vendors/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/dist/vendors/moment/moment.js"></script>
+    <script src="~/dist/vendors/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/dist/vendors/slimscroll/jquery.slimscroll.min.js"></script>
+    <!-- END: Template JS -->
+    <!-- START: APP JS -->
+    <script src="~/dist/js/app.js"></script>
+    <!-- END: APP JS -->
+    <!-- START: Page Vendor JS -->
+    <script src="~/dist/vendors/datatable/js/jquery.dataTables.min.js"></script>
+    <script src="~/dist/vendors/datatable/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/dist/vendors/datatable/jszip/jszip.min.js"></script>
+    <script src="~/dist/vendors/datatable/pdfmake/pdfmake.min.js"></script>
+    <script src="~/dist/vendors/datatable/pdfmake/vfs_fonts.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/buttons.flash.min.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
+    <script src="~/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
+    <!-- END: Page Vendor JS -->
+    <!-- START: Page Script JS -->
+    <script src="~/dist/js/datatable.script.js"></script>
+    <!-- END: Page Script JS -->
+
+    <script src="~/Plantilla/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/Plantilla/assets/libs/node-waves/waves.min.js"></script>
+    <script src="~/Plantilla/assets/libs/feather-icons/feather.min.js"></script>
+    <script src="~/Plantilla/assets/js/pages/plugins/lord-icon-2.1.0.js"></script>
+    <script src="~/Plantilla/assets/js/plugins.js"></script>
+
+    <script src="~/Plantilla/toastify-js.js"></script>
+    <script src="~/Plantilla/assets/libs/choices.js/choices.min.js"></script>
+    <script src="~/Plantilla/assets/libs/flatpickr/flatpickr.min.js"></script>
+
+    <!-- COMPONENTES -->
+    <script src="~/Plantilla/assets/libs/fullcalendar/main.min.js"></script>
+    <script src="~/Plantilla/assets/js/pages/calendar.init.js"></script>
+    <script src="~/Plantilla/select2/dist/js/select2.js"></script>
+    <script src="~/Plantilla/assets/libs/sweetalert2/sweetalert2.min.js"></script>
+    <script src="~/Plantilla/assets/js/pages/sweetalerts.init.js"></script>
+    <!-- App js -->
+    <script src="~/Plantilla/assets/libs/prismjs/prism.js"></script>
+    <script src="~/Plantilla/assets/libs/list.js/list.min.js"></script>
+    <script src="~/Plantilla/assets/libs/list.pagination.js/list.pagination.min.js"></script>
+    <script src="~/Plantilla/assets/js/pages/listjs.init.js"></script>
+    <script src="~/Plantilla/assets/js/app.js"></script>
+
+    <!-- Iconos -->
+    <link href="~/Content/IconosAweson/all.min.css" rel="stylesheet" />
+    <link href="~/Content/IconosAweson/font-awesome.css" rel="stylesheet" />
+    <script src="~/Content/IconosAweson/fontawesome.js"></script>
+
+    <!-- Otros -->
+    <script src="~/dist/css/moment.min.js"></script>
+    <script src="~/dist/css/tempusdominus-bootstrap-4.min.js"></script>
+    <link href="~/dist/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    <script src="~/Content/fileUpload/dropify.min.js"></script>
+    <script src="~/Content/fileUpload/js/custom.min.js"></script>
+    <script src="~/Content/fileUpload/dropifyGlobal.js"></script>
+
+    <script src="~/Content/daterangepicker/daterangepicker.js"></script>
+    <script src="~/Content/daterangepicker/datepicker/datepicker.min.js"></script>
+    <script src="~/Content/daterangepicker/datepicker/datepicker.js"></script>
+
+
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </body>
 </html>
