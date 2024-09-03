@@ -1,45 +1,65 @@
 ﻿@page "/contratacion"
 @page "/contratacion/{param}"
-
+@inject IEncryDecrypt _EncryDecrypt
+@inject IUser _User
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <h4 class="mb-sm-0 btn-outline-primary">Gestión Contratación</h4>
-                </ol>
+
+    <div class="col-md-12">
+        @if (isAuthorized == null)
+        {
+
+            <div>Cargando...</div>
+        }
+        else if (isAuthorized == true)
+        {
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <h4 class="mb-sm-0 btn-outline-primary">Gestión Contratación</h4>
+                            </ol>
+                        </div>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a>Consulta Contratos</a></li>
+                                <li class="breadcrumb-item active">Gestiona Contratos</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a>Consulta Contratos</a></li>
-                    <li class="breadcrumb-item active">Gestiona Contratos</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
-
-<MudGrid>
-    <MudItem xs="12">
-        <MudPaper Class="pa-3">
             <MudGrid>
-                <MudItem xs="0">
-                    <MudButton Variant="Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" @onclick="BtnNuevoClick" Title="Nuevo Registro">
-                        <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
-                    </MudButton>
-                    <MudButton Variant="Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="true" @onclick="BtnGuardarClick" Title="Guardar">
-                        <MudIcon Icon="@Icons.Filled.Save" Size="Size.Large" />
-                    </MudButton>
-                    <MudButton Variant="Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="true" @onclick="BtnAnularClick" Title="Anular Registro">
-                        <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
-                    </MudButton>
-                   @* <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mb-2" Icon="@Icons.Material.Filled.Search" @onclick="BtnBuscarClick" Title="Buscar Registro">
-                        <MudIcon Icon="@Icons.Filled.Search" Size="Size.Large" />
-                    </MudButton>*@
+                <MudItem xs="12">
+                    <MudPaper Class="pa-3">
+                        <MudGrid>
+                            <MudItem xs="0">
+                                <MudButton Variant="Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" @onclick="BtnNuevoClick" Title="Nuevo Registro">
+                                    <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
+                                </MudButton>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="true" @onclick="BtnGuardarClick" Title="Guardar">
+                                    <MudIcon Icon="@Icons.Filled.Save" Size="Size.Large" />
+                                </MudButton>
+                                <MudButton Variant="Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="true" @onclick="BtnAnularClick" Title="Anular Registro">
+                                    <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
+                                </MudButton>
+                                @* <MudButton Variant="Variant.Outlined" Color="Color.Primary" Class="mb-2" Icon="@Icons.Material.Filled.Search" @onclick="BtnBuscarClick" Title="Buscar Registro">
+                            <MudIcon Icon="@Icons.Filled.Search" Size="Size.Large" />
+                            </MudButton>*@
+                            </MudItem>
+                        </MudGrid>
+                    </MudPaper>
                 </MudItem>
             </MudGrid>
-        </MudPaper>
-    </MudItem>
-</MudGrid>
 
+
+            <div>autorizado</div>
+        }
+        else
+        {
+            <div>No autorizado</div>
+        }
+    </div>
+</div>
