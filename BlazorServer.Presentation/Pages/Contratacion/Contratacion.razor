@@ -1,5 +1,6 @@
 ﻿@page "/contratacion"
 @page "/contratacion/{param}"
+@using BlazorServer.Presentation.Shared.Contratacion
 @inject IEncryDecrypt _EncryDecrypt
 @inject IUser _User
 <div class="row">
@@ -9,6 +10,7 @@
         {
 
             <div>Cargando...</div>
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
         }
         else if (isAuthorized == true)
         {
@@ -54,12 +56,12 @@
                 </MudItem>
             </MudGrid>
 
+            <ConvenioAdd urlParametersDTO="@urlParametersDTO" />
 
-            <div>autorizado</div>
         }
         else
         {
-            <div>No autorizado</div>
+            <MudAlert Severity="Severity.Error">No autorizado</MudAlert>
         }
     </div>
 </div>

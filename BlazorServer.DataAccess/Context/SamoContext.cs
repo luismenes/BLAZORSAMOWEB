@@ -31,6 +31,8 @@ public partial class SamoContext : DbContext
 
     public virtual DbSet<ContactoPaciente> ContactoPacientes { get; set; }
 
+    public virtual DbSet<Convenio> Convenios { get; set; }
+
     public virtual DbSet<Dato> Datos { get; set; }
 
     public virtual DbSet<Departamento> Departamentos { get; set; }
@@ -96,6 +98,7 @@ public partial class SamoContext : DbContext
     public virtual DbSet<UserSede> UserSedes { get; set; }
 
     public virtual DbSet<ZonaResidencial> ZonaResidencials { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         IConfigurationRoot configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -260,6 +263,67 @@ public partial class SamoContext : DbContext
             entity.HasOne(d => d.Zona).WithMany(p => p.ContactoPacientes)
                 .HasForeignKey(d => d.ZonaId)
                 .HasConstraintName("FK_ContactoPaciente_TR_ZONA_RESIDENCIAL");
+        });
+
+        modelBuilder.Entity<Convenio>(entity =>
+        {
+            entity.ToTable("Convenio", "Configuracion");
+
+            entity.Property(e => e.Codigo)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.CodigoEapb)
+                .HasMaxLength(400)
+                .IsUnicode(false)
+                .HasColumnName("CodigoEAPB");
+            entity.Property(e => e.CodigoRips)
+                .IsUnicode(false)
+                .HasColumnName("CodigoRIPS");
+            entity.Property(e => e.EsConBeneficiarios).HasColumnName("Es_ConBeneficiarios");
+            entity.Property(e => e.EsJustNoPos).HasColumnName("Es_JustNoPos");
+            entity.Property(e => e.EsTodaSede).HasColumnName("Es_TodaSede");
+            entity.Property(e => e.FechaActualizacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaFin).HasColumnType("date");
+            entity.Property(e => e.FechaInicio).HasColumnType("date");
+            entity.Property(e => e.FechaPrestaFin).HasColumnType("date");
+            entity.Property(e => e.FechaPrestaInicio).HasColumnType("date");
+            entity.Property(e => e.Nombre)
+                .HasMaxLength(500)
+                .IsUnicode(false);
+            entity.Property(e => e.PoblacionAtiende).HasMaxLength(100);
+
+            entity.HasOne(d => d.Clase).WithMany(p => p.ConvenioClases)
+                .HasForeignKey(d => d.ClaseId)
+                .HasConstraintName("FK_Convenio_Dato");
+
+            entity.HasOne(d => d.Entidad).WithMany(p => p.Convenios)
+                .HasForeignKey(d => d.EntidadId)
+                .HasConstraintName("FK_Convenio_Entidad");
+
+            entity.HasOne(d => d.Operacion).WithMany(p => p.Convenios)
+                .HasForeignKey(d => d.OperacionId)
+                .HasConstraintName("FK_Convenio_Operacion");
+
+            entity.HasOne(d => d.OrigenConvenio).WithMany(p => p.ConvenioOrigenConvenios)
+                .HasForeignKey(d => d.OrigenConvenioId)
+                .HasConstraintName("FK_Convenio_Dato2");
+
+            entity.HasOne(d => d.TipoConvenio).WithMany(p => p.ConvenioTipoConvenios)
+                .HasForeignKey(d => d.TipoConvenioId)
+                .HasConstraintName("FK_Convenio_Dato1");
+
+            entity.HasOne(d => d.TipoUserRegimenNavigation).WithMany(p => p.ConvenioTipoUserRegimenNavigations)
+                .HasForeignKey(d => d.TipoUserRegimen)
+                .HasConstraintName("FK_Convenio_Dato3");
+
+            entity.HasOne(d => d.UsuarioActualiza).WithMany(p => p.ConvenioUsuarioActualizas)
+                .HasForeignKey(d => d.UsuarioActualizaId)
+                .HasConstraintName("FK_Convenio_User1");
+
+            entity.HasOne(d => d.Usuario).WithMany(p => p.ConvenioUsuarios)
+                .HasForeignKey(d => d.UsuarioId)
+                .HasConstraintName("FK_Convenio_User");
         });
 
         modelBuilder.Entity<Dato>(entity =>

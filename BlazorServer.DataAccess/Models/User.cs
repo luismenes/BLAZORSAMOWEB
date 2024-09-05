@@ -29,6 +29,10 @@ public partial class User
 
     public virtual ICollection<ConfiguracionPlantilla> ConfiguracionPlantillas { get; set; } = new List<ConfiguracionPlantilla>();
 
+    public virtual ICollection<Convenio> ConvenioUsuarioActualizas { get; set; } = new List<Convenio>();
+
+    public virtual ICollection<Convenio> ConvenioUsuarios { get; set; } = new List<Convenio>();
+
     public virtual ICollection<DetalleOperacion> DetalleOperacions { get; set; } = new List<DetalleOperacion>();
 
     public virtual Entidad? EntidadldNavigation { get; set; }

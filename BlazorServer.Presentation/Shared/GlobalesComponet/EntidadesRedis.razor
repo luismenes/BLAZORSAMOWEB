@@ -1,0 +1,76 @@
+﻿@inject IEntidadSamo EntidadService
+<div class="container-fluid">
+    <MudCard>
+        <MudCardContent>
+            <MudText typ="h4">Filtros</MudText>
+            <MudGrid>
+                <MudItem xs="12" md="4">
+
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Identificación:</MudText>
+                    <MudTextField @bind-Value="identificacion" Variant="Variant.Text" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Documento de Identidad:</MudText>
+                    <MudTextField @bind-Value="documentoIdentidadID" Variant="Variant.Text" />
+                </MudItem>
+                <MudItem xs="12" md="4">
+                    <MudButton @onclick="Filtrar" Variant="Variant.Filled" Color="Color.Primary" class="mt-4">Aplicar Filtros</MudButton>
+                    <MudButton @onclick="LimpiarCampos" Variant="Variant.Outlined" Color="Color.Secondary" class="mt-4 ms-2">Limpiar</MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    @if (mostrarMensaje)
+    {
+        <div class="card card-body text-center">
+            <div class="alert alert-info alert-border-left alert-dismissible fade show" role="alert">
+                <i class="ri-airplay-line me-3 align-middle"></i> <strong>***** No se encuentra registros *****</strong>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover w-100">
+                    <thead>
+                        <tr>
+                            <th>Acciones</th>
+                            <th>Tipo Persona</th>
+                            <th>Tipo Documento</th>
+                            <th>NroDocumento</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var entidad in listaEntidades)
+                        {
+                            <tr>
+                                <td>
+                                    <button @onclick="() => CargarDatosEntidad(entidad.Id)" class="btn btn-outline-info">
+                                        <i class="las la-user-alt"></i>
+                                    </button>
+                                </td>
+                                <td>@entidad.TipoPersona</td>
+                                <td>@entidad.TipoIdentificacion</td>
+                                <td>@entidad.Documento</td>
+                                <td>@entidad.NombreEntidad</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <MudCard class="mt-4">
+                <MudCardContent>
+                    <MudPagination Variant="Variant.Filled"
+                               Count="@totalPaginas"
+                               Page="@paginaActual"
+                               OnPageChanged="OnPageChanged"
+                               Class="pagination-round" />
+
+                </MudCardContent>
+            </MudCard>
+        </div>
+    }
+</div>

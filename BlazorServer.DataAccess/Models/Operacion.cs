@@ -23,6 +23,8 @@ public partial class Operacion
 
     public virtual ICollection<ConfiguracionPlantilla> ConfiguracionPlantillas { get; set; } = new List<ConfiguracionPlantilla>();
 
+    public virtual ICollection<Convenio> Convenios { get; set; } = new List<Convenio>();
+
     public virtual ICollection<DetalleOperacion> DetalleOperacions { get; set; } = new List<DetalleOperacion>();
 
     public virtual ICollection<Entidad> Entidads { get; set; } = new List<Entidad>();

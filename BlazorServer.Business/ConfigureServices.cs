@@ -24,6 +24,7 @@ namespace BlazorServer.Business
             //services.AddScoped<IDBExampleBLLQuery, ExampleBLL>();
             services.AddScoped(typeof(IEncryDecrypt), typeof(EncryDecrypt));
             services.AddScoped(typeof(IUser), typeof(UserRedis));
+            services.AddScoped(typeof(IEntidadSamo), typeof(EntidadSamo));
             services.AddDataServices(configuration);
             return services;
         }

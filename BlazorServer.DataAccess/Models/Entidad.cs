@@ -83,6 +83,8 @@ public partial class Entidad
 
     public virtual ICollection<ClaseEntidad> ClaseEntidads { get; set; } = new List<ClaseEntidad>();
 
+    public virtual ICollection<Convenio> Convenios { get; set; } = new List<Convenio>();
+
     public virtual Departamento? Departamento { get; set; }
 
     public virtual ICollection<DetalleOperacion> DetalleOperacions { get; set; } = new List<DetalleOperacion>();

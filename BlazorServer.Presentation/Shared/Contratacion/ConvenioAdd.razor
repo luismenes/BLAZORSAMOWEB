@@ -1,0 +1,157 @@
+﻿@inject IEncryDecrypt _EncryDecrypt
+@inject NavigationManager NavigationManager
+@using BlazorServer.Presentation.Shared.GlobalesComponet
+
+<div class="card">
+    <div class="card-body">
+        <div class="card outline-badge-primary">
+            <div class="card-content">
+                <div class="card-body p-2">
+                    <div>
+                        <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Left">Datos del Convenio</MudAlert>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <MudCard>
+            <MudCardContent>
+                <MudGrid GutterSize="2">
+                    <!-- Código -->
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Código: <span style="color: red;">*</span></MudText>
+                        <MudTextField @bind-Value="codigoGeneral" Variant="Variant.Outlined" />
+                    </MudItem>
+
+                    <!-- Nombre -->
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre: <span style="color: red;">*</span></MudText>
+                        <MudTextField @bind-Value="nombreGeneral" Variant="Variant.Outlined" />
+                    </MudItem>
+
+
+                    <!-- Clase -->
+                    <MudItem xs="12" md="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Clase: <span style="color: red;">*</span></MudText>
+                        <MudSelect T="string" Label="Clase" Variant="Variant.Outlined" @bind-Value="claseGeneral">
+                            <!-- Aquí puedes agregar opciones -->
+                        </MudSelect>
+                    </MudItem>
+
+                     <!-- Código EAPB -->
+                    <MudItem xs="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Código EAPB</MudText>
+                        <MudTextField @bind-Value="codigoRips" Variant="Variant.Outlined" />
+                    </MudItem>
+
+                   <EntidadesRedis></EntidadesRedis>
+
+                    <!-- Código RIPS -->
+                    @*<MudItem xs="6">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Código RIPS</MudText>
+                        <MudTextField @bind-Value="codigoRips" Variant="Variant.Outlined" />
+                    </MudItem>*@
+
+                  
+
+                    <!-- Tipo -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo: <span style="color: red;">*</span></MudText>
+                        <MudSelect T="string" Label="Tipo" Variant="Variant.Outlined" @bind-Value="tipoGeneral">
+                            <!-- Aquí puedes agregar opciones -->
+                        </MudSelect>
+                    </MudItem>
+
+                    <!-- Origen -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Origen: <span style="color: red;">*</span></MudText>
+                        <MudSelect T="string" Label="Origen" Variant="Variant.Outlined" @bind-Value="origenGeneral">
+                            <!-- Aquí puedes agregar opciones -->
+                        </MudSelect>
+                    </MudItem>
+
+                    <!-- Régimen -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo de Usuario (Régimen): <span style="color: red;">*</span></MudText>
+                        <MudSelect T="string" Label="Régimen" Variant="Variant.Outlined" @bind-Value="tipoRegimen">
+                            <!-- Aquí puedes agregar opciones -->
+                        </MudSelect>
+                    </MudItem>
+
+                    <!-- Población a Atender -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Población a Atender</MudText>
+                        <MudTextField @bind-Value="poblacionAtender" Variant="Variant.Outlined" />
+                    </MudItem>
+
+                    <!-- Fechas -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Convenio/Fecha Inicio: <span style="color: red;">*</span></MudText>
+                        <MudDatePicker @bind-Date="fechaInicioConvenio" Variant="Variant.Outlined" @ref="_pickerInicioConvenio">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioConvenio))">Limpiar</MudButton>
+                                <MudButton OnClick="@(() => CancelPicker(_pickerInicioConvenio))">Cancelar</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioConvenio))">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
+                        <MudDatePicker @bind-Date="fechaFinConvenio" Variant="Variant.Outlined" @ref="_pickerFinConvenio">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinConvenio))">Limpiar</MudButton>
+                                <MudButton OnClick="@(() => CancelPicker(_pickerFinConvenio))">Cancelar</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinConvenio))">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Prestación/Fecha Inicio: <span style="color: red;">*</span></MudText>
+                        <MudDatePicker @bind-Date="fechaInicioPrestacion" Variant="Variant.Outlined" @ref="_pickerInicioPrestacion">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioPrestacion))">Limpiar</MudButton>
+                                <MudButton OnClick="@(() => CancelPicker(_pickerInicioPrestacion))">Cancelar</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioPrestacion))">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
+                        <MudDatePicker @bind-Date="fechaFinPrestacion" Variant="Variant.Outlined" @ref="_pickerFinPrestacion">
+                            <PickerActions>
+                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinPrestacion))">Limpiar</MudButton>
+                                <MudButton OnClick="@(() => CancelPicker(_pickerFinPrestacion))">Cancelar</MudButton>
+                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinPrestacion))">Ok</MudButton>
+                            </PickerActions>
+                        </MudDatePicker>
+                    </MudItem>
+
+
+
+                    <!-- Switches -->
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Todas las Sedes</MudText>
+                        <MudSwitch @bind-Value="todasLasSedes" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                    </MudItem>
+
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Acepta Beneficiarios</MudText>
+                        <MudSwitch @bind-Value="aceptaBeneficiarios" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                    </MudItem>
+
+                    <MudItem xs="12" md="3">
+                        <MudText Typo="Typo.subtitle2" Class="mb-1">Justificación no POS</MudText>
+                        <MudSwitch @bind-Value="justificacionNoPos" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                    </MudItem>
+
+                </MudGrid>
+            </MudCardContent>
+        </MudCard>
+
+    </div>
+</div>
+

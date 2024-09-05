@@ -31,6 +31,14 @@ public partial class Dato
 
     public virtual ICollection<ClaseEntidad> ClaseEntidads { get; set; } = new List<ClaseEntidad>();
 
+    public virtual ICollection<Convenio> ConvenioClases { get; set; } = new List<Convenio>();
+
+    public virtual ICollection<Convenio> ConvenioOrigenConvenios { get; set; } = new List<Convenio>();
+
+    public virtual ICollection<Convenio> ConvenioTipoConvenios { get; set; } = new List<Convenio>();
+
+    public virtual ICollection<Convenio> ConvenioTipoUserRegimenNavigations { get; set; } = new List<Convenio>();
+
     public virtual ICollection<DetalleOperacion> DetalleOperacionAmbitos { get; set; } = new List<DetalleOperacion>();
 
     public virtual ICollection<DetalleOperacion> DetalleOperacionCentralizados { get; set; } = new List<DetalleOperacion>();
