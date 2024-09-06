@@ -4,7 +4,7 @@
 @using BlazorServer.DataAccess.Models
 @using BlazorServer.Presentation.Shared.GlobalesComponet
 @inject TablaDatoService TablaDatoService
-
+@inject IEntidadSamo EntidadService
 <div class="card">
     <div class="card-body">
         <div class="card outline-badge-primary">
@@ -18,150 +18,195 @@
                 </div>
             </div>
         </div>
-        <MudCard>
-            <MudCardContent>
-                <MudGrid GutterSize="2">
-                    <!-- Código -->
-                    <MudItem xs="12" md="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Código: <span style="color: red;">*</span></MudText>
-                        <MudTextField @bind-Value="ConvenioModel.Codigo" Variant="MudBlazor.Variant.Outlined" />
-                    </MudItem>
 
-                    <!-- Nombre -->
-                    <MudItem xs="12" md="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre: <span style="color: red;">*</span></MudText>
-                        <MudTextField @bind-Value="ConvenioModel.Nombre" Variant="MudBlazor.Variant.Outlined" />
-                    </MudItem>
+        <EditForm Model="@ConvenioModel">
+            <CustomValidation @ref="customValidation" />
 
+            <MudCard>
+                <MudCardContent>
+                    <MudGrid GutterSize="2">
+                        <!-- Código -->
+                        <MudItem xs="12" md="6">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Código: <span style="color: red;">*</span></MudText>
+                            <MudTextField @bind-Value="ConvenioModel.Codigo" Variant="MudBlazor.Variant.Outlined" />
+                            <ValidationMessage For="@(() => ConvenioModel.Codigo)" />
 
-                    <!-- Clase -->
-                    <MudItem xs="12" md="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Clase: <span style="color: red;">*</span></MudText>
-                        <RadzenDropDown TValue="long"
-                                        Class="w-100"
-                                        Placeholder="Selecciona una opción..."
-                                        Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_clasesJuridicas))"
-                                        TextProperty="Nombre"
-                                        ValueProperty="Id"
-                                        AllowFiltering="true"
-                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
-                                        @bind-Value="ConvenioModel.ClaseId" />
-                    </MudItem>
+                        </MudItem>
 
-                    <!-- Código EAPB -->
-                    <MudItem xs="6">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Código EAPB</MudText>
-                        <MudTextField @bind-Value="ConvenioModel.CodigoEapb" Variant="MudBlazor.Variant.Outlined" />
-                    </MudItem>
+                        <!-- Nombre -->
+                        <MudItem xs="12" md="6">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre: <span style="color: red;">*</span></MudText>
+                            <MudTextField @bind-Value="ConvenioModel.Nombre" Variant="MudBlazor.Variant.Outlined" />
+                            <ValidationMessage For="@(() => ConvenioModel.Nombre)" />
 
-                    <!-- TERCERO -->
-                    <MudItem xs="12">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre de la entidad: <span style="color: red;">*</span></MudText>
-                        <MudTextField @bind-Value="ConvenioModel.NombreEntidad" fullWidth Disabled Variant="MudBlazor.Variant.Filled" />
-                    </MudItem>
-
-                    @if (expandPanel)
-                    {
-                        <EntidadesRedis></EntidadesRedis>
-                    }
-
-                    <!-- Tipo -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo: <span style="color: red;">*</span></MudText>
-                        <MudSelect T="string" Label="Tipo" Variant="MudBlazor.Variant.Outlined" @bind-Value="ConvenioModel.TipoConvenioId">
-                            <!-- Aquí puedes agregar opciones -->
-                        </MudSelect>
-                    </MudItem>
-
-                    <!-- Origen -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Origen: <span style="color: red;">*</span></MudText>
-                        <MudSelect T="string" Label="Origen" Variant="MudBlazor.Variant.Outlined" @bind-Value="ConvenioModel.OrigenConvenioId">
-                            <!-- Aquí puedes agregar opciones -->
-                        </MudSelect>
-                    </MudItem>
-
-                    <!-- Régimen -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo de Usuario (Régimen): <span style="color: red;">*</span></MudText>
-                        <MudSelect T="string" Label="Régimen" Variant="MudBlazor.Variant.Outlined" @bind-Value="ConvenioModel.TipoUserRegimen">
-                            <!-- Aquí puedes agregar opciones -->
-                        </MudSelect>
-                    </MudItem>
-
-                    <!-- Población a Atender -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Población a Atender</MudText>
-                        <MudTextField @bind-Value="ConvenioModel.PoblacionAtiende" Variant="MudBlazor.Variant.Outlined" />
-                    </MudItem>
-
-                    <!-- Fechas -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Convenio/Fecha Inicio: <span style="color: red;">*</span></MudText>
-                        <MudDatePicker @bind-Date="ConvenioModel.FechaInicio" Variant="MudBlazor.Variant.Outlined" @ref="_pickerInicioConvenio">
-                            <PickerActions>
-                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioConvenio))">Limpiar</MudButton>
-                                <MudButton OnClick="@(() => CancelPicker(_pickerInicioConvenio))">Cancelar</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioConvenio))">Ok</MudButton>
-                            </PickerActions>
-                        </MudDatePicker>
-                    </MudItem>
-
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
-                        <MudDatePicker @bind-Date="ConvenioModel.FechaFin" Variant="MudBlazor.Variant.Outlined" @ref="_pickerFinConvenio">
-                            <PickerActions>
-                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinConvenio))">Limpiar</MudButton>
-                                <MudButton OnClick="@(() => CancelPicker(_pickerFinConvenio))">Cancelar</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinConvenio))">Ok</MudButton>
-                            </PickerActions>
-                        </MudDatePicker>
-                    </MudItem>
-
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Prestación/Fecha Inicio: <span style="color: red;">*</span></MudText>
-                        <MudDatePicker @bind-Date="ConvenioModel.FechaPrestaInicio" Variant="MudBlazor.Variant.Outlined" @ref="_pickerInicioPrestacion">
-                            <PickerActions>
-                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioPrestacion))">Limpiar</MudButton>
-                                <MudButton OnClick="@(() => CancelPicker(_pickerInicioPrestacion))">Cancelar</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioPrestacion))">Ok</MudButton>
-                            </PickerActions>
-                        </MudDatePicker>
-                    </MudItem>
-
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
-                        <MudDatePicker @bind-Date="ConvenioModel.FechaPrestaFin" Variant="MudBlazor.Variant.Outlined" @ref="_pickerFinPrestacion">
-                            <PickerActions>
-                                <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinPrestacion))">Limpiar</MudButton>
-                                <MudButton OnClick="@(() => CancelPicker(_pickerFinPrestacion))">Cancelar</MudButton>
-                                <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinPrestacion))">Ok</MudButton>
-                            </PickerActions>
-                        </MudDatePicker>
-                    </MudItem>
+                        </MudItem>
 
 
+                        <!-- Clase -->
+                        <MudItem xs="12" md="6">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Clase: <span style="color: red;">*</span></MudText>
+                            <RadzenDropDown TValue="long"
+                                            Class="w-100"
+                                            Placeholder="Selecciona una opción..."
+                                            Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_clasesJuridicas))"
+                                            TextProperty="Nombre"
+                                            ValueProperty="Id"
+                                            AllowFiltering="true"
+                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                            ValueChanged="@(async (long id) => await HandleSelectionChange(id))"
+                                            ValueExpression="@(() => ConvenioModel.ClaseId)"
+                                            Value="ConvenioModel.ClaseId" />
+                            <ValidationMessage For="@(() => ConvenioModel.ClaseId)" />
 
-                    <!-- Switches -->
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Todas las Sedes</MudText>
-                        <MudSwitch @bind-Value="ConvenioModel.EsTodaSede" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
-                    </MudItem>
+                        </MudItem>
 
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Acepta Beneficiarios</MudText>
-                        <MudSwitch @bind-Value="ConvenioModel.EsConBeneficiarios" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
-                    </MudItem>
+                        <!-- Código EAPB -->
+                        <MudItem xs="6">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Código EAPB</MudText>
+                            <MudTextField @bind-Value="ConvenioModel.CodigoEapb" Variant="MudBlazor.Variant.Outlined" />
+                        </MudItem>
 
-                    <MudItem xs="12" md="3">
-                        <MudText Typo="Typo.subtitle2" Class="mb-1">Justificación no POS</MudText>
-                        <MudSwitch @bind-Value="ConvenioModel.EsJustNoPos" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
-                    </MudItem>
+                        <!-- TERCERO -->
+                        <MudItem xs="12">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre de la entidad: <span style="color: red;">*</span></MudText>
+                            <MudTextField @bind-Value="ConvenioModel.NombreEntidad" fullWidth Disabled Variant="MudBlazor.Variant.Filled" />
+                            <ValidationMessage For="@(() => ConvenioModel.NombreEntidad)" />
 
-                </MudGrid>
-            </MudCardContent>
-        </MudCard>
+                        </MudItem>
 
+                        @if (expandPanel)
+                        {
+                            <EntidadesRedis SetContinue="GuardarFormularioCliente" ></EntidadesRedis>
+                        }
+
+                        <!-- Tipo -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo: <span style="color: red;">*</span></MudText>
+                            <RadzenDropDown TValue="long"
+                                            Class="w-100"
+                                            Placeholder="Selecciona una opción..."
+                                            Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_Tipo))"
+                                            TextProperty="Nombre"
+                                            ValueProperty="Id"
+                                            AllowFiltering="true"
+                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                            @bind-Value="ConvenioModel.TipoConvenioId" />
+                            <ValidationMessage class="small-text" For="@(() => ConvenioModel.TipoConvenioId)" />
+                        </MudItem>
+
+                        <!-- Origen -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Origen: <span style="color: red;">*</span></MudText>
+                            <RadzenDropDown TValue="long"
+                                            Class="w-100"
+                                            Placeholder="Selecciona una opción..."
+                                            Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_Origen))"
+                                            TextProperty="Nombre"
+                                            ValueProperty="Id"
+                                            AllowFiltering="true"
+                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                            @bind-Value="ConvenioModel.OrigenConvenioId" />
+                            <ValidationMessage For="@(() => ConvenioModel.OrigenConvenioId)" />
+
+                        </MudItem>
+
+                        <!-- Régimen -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo de Usuario (Régimen): <span style="color: red;">*</span></MudText>
+                            <RadzenDropDown TValue="long"
+                                            Class="w-100"
+                                            Placeholder="Selecciona una opción..."
+                                            Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_regimenUsuario))"
+                                            TextProperty="Nombre"
+                                            ValueProperty="Id"
+                                            AllowFiltering="true"
+                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                            @bind-Value="ConvenioModel.TipoUserRegimen" />
+                            <ValidationMessage For="@(() => ConvenioModel.TipoUserRegimen)" />
+
+                        </MudItem>
+
+                        <!-- Población a Atender -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Población a Atender</MudText>
+                            <MudTextField @bind-Value="ConvenioModel.PoblacionAtiende" Variant="MudBlazor.Variant.Outlined" />
+                        </MudItem>
+
+                        <!-- Fechas -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Convenio/Fecha Inicio: <span style="color: red;">*</span></MudText>
+                            <MudDatePicker @bind-Date="ConvenioModel.FechaInicio" Variant="MudBlazor.Variant.Outlined" @ref="_pickerInicioConvenio">
+                                <PickerActions Context="pickerContext">
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioConvenio))">Limpiar</MudButton>
+                                    <MudButton OnClick="@(() => CancelPicker(_pickerInicioConvenio))">Cancelar</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioConvenio))">Ok</MudButton>
+                                </PickerActions>
+                            </MudDatePicker>
+                            <ValidationMessage For="@(() => ConvenioModel.FechaInicio)" />
+
+                        </MudItem>
+
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
+                            <MudDatePicker @bind-Date="ConvenioModel.FechaFin" Variant="MudBlazor.Variant.Outlined" @ref="_pickerFinConvenio">
+                                <PickerActions Context="pickerContext">
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinConvenio))">Limpiar</MudButton>
+                                    <MudButton OnClick="@(() => CancelPicker(_pickerFinConvenio))">Cancelar</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinConvenio))">Ok</MudButton>
+                                </PickerActions>
+                            </MudDatePicker>
+                            <ValidationMessage For="@(() => ConvenioModel.FechaFin)" />
+
+                        </MudItem>
+
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Prestación/Fecha Inicio: <span style="color: red;">*</span></MudText>
+                            <MudDatePicker @bind-Date="ConvenioModel.FechaPrestaInicio" Variant="MudBlazor.Variant.Outlined" @ref="_pickerInicioPrestacion">
+                                <PickerActions Context="pickerContext">
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerInicioPrestacion))">Limpiar</MudButton>
+                                    <MudButton OnClick="@(() => CancelPicker(_pickerInicioPrestacion))">Cancelar</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerInicioPrestacion))">Ok</MudButton>
+                                </PickerActions>
+                            </MudDatePicker>
+                            <ValidationMessage For="@(() => ConvenioModel.FechaPrestaInicio)" />
+
+                        </MudItem>
+
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Fecha Final: <span style="color: red;">*</span></MudText>
+                            <MudDatePicker @bind-Date="ConvenioModel.FechaPrestaFin" Variant="MudBlazor.Variant.Outlined" @ref="_pickerFinPrestacion">
+                                <PickerActions Context="pickerContext">
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => ClearPicker(_pickerFinPrestacion))">Limpiar</MudButton>
+                                    <MudButton OnClick="@(() => CancelPicker(_pickerFinPrestacion))">Cancelar</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => OkPicker(_pickerFinPrestacion))">Ok</MudButton>
+                                </PickerActions>
+                            </MudDatePicker>
+                            <ValidationMessage For="@(() => ConvenioModel.FechaPrestaFin)" />
+
+                        </MudItem>
+
+
+
+                        <!-- Switches -->
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Todas las Sedes</MudText>
+                            <MudSwitch @bind-Value="ConvenioModel.EsTodaSede" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                        </MudItem>
+
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Acepta Beneficiarios</MudText>
+                            <MudSwitch @bind-Value="ConvenioModel.EsConBeneficiarios" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                        </MudItem>
+
+                        <MudItem xs="12" md="3">
+                            <MudText Typo="Typo.subtitle2" Class="mb-1">Justificación no POS</MudText>
+                            <MudSwitch @bind-Value="ConvenioModel.EsJustNoPos" Label=" " Color="Color.Success" UnCheckedColor="Color.Error" />
+                        </MudItem>
+
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </EditForm>
     </div>
 </div>
 

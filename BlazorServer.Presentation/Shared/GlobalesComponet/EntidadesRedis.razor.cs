@@ -1,9 +1,14 @@
-﻿using static BlazorServer.Business.BLL.EntidadSamo;
+﻿using BlazorServer.DTO.Request;
+using BlazorServer.DTO.Request.Contratacion;
+using Microsoft.AspNetCore.Components;
+using static BlazorServer.Business.BLL.EntidadSamo;
 
 namespace BlazorServer.Presentation.Shared.GlobalesComponet
 {
     public partial class EntidadesRedis
     {
+        [Parameter]
+        public EventCallback<EntidadIdDTO> SetContinue { get; set; }
         private List<EntidadDto> listaEntidades = new List<EntidadDto>();
         private string NombreDocumento { get; set; }
         private string NombreEntidad { get; set; }
@@ -70,6 +75,12 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
                         (resultado.TipoPersonaId == 134 ? resultado.NumeroIdentificacion :
                         $"{resultado.NumeroIdentificacion} - {resultado.DigitoVerificacion}");
 
+                EntidadIdDTO clienteRequest = new EntidadIdDTO();
+                clienteRequest.IdEntidad = resultado.Id;
+               
+
+                _swaAlerts.ShowLoadingClose();
+                await SetContinue.InvokeAsync(clienteRequest);
             }
             StateHasChanged();
 
@@ -79,6 +90,7 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
         {
             NombreDocumento = "";
             NombreEntidad = "";
+            
         }
     }
 }

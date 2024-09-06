@@ -17,15 +17,15 @@ namespace BlazorServer.DTO.Request.Contratacion
         public long ClaseId { get; set; }
 
         public long EntidadId { get; set; }
-        public string NombreEntidad { get; set; }
+        public string? NombreEntidad { get; set; }
 
         public string CodigoEapb { get; set; }
 
-        public string TipoConvenioId { get; set; }
+        public long TipoConvenioId { get; set; }
 
-        public string OrigenConvenioId { get; set; }
+        public long OrigenConvenioId { get; set; }
 
-        public string TipoUserRegimen { get; set; }
+        public long TipoUserRegimen { get; set; }
 
         public string? PoblacionAtiende { get; set; }
 
@@ -42,6 +42,16 @@ namespace BlazorServer.DTO.Request.Contratacion
         public bool EsConBeneficiarios { get; set; }
 
         public bool EsJustNoPos { get; set; }
+
+        public DateTime? FechaCreacion { get; set; }
+
+        public DateTime? FechaActualizacion { get; set; }
+
+        public long? UsuarioActualizaId { get; set; }
+        public long UsuarioId { get; set; }
+
+        public long? OperacionId { get; set; }
+        public bool Estado { get; set; }
 
     }
 }

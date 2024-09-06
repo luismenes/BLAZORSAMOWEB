@@ -1,8 +1,12 @@
 ﻿@page "/contratacion"
 @page "/contratacion/{param}"
+@using BlazorServer.Business.Interfaces.Contratacion
 @using BlazorServer.Presentation.Shared.Contratacion
 @inject IEncryDecrypt _EncryDecrypt
+@inject IConveniosSAM _ConveniosSAMService
 @inject IUser _User
+@inject IJSRuntime JSRuntime
+
 <div class="row">
 
     <div class="col-md-12">
@@ -41,7 +45,7 @@
                                 <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" @onclick="BtnNuevoClick" Title="Nuevo Registro">
                                     <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
                                 </MudButton>
-                                <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="true" @onclick="BtnGuardarClick" Title="Guardar">
+                                <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save"  @onclick="BtnGuardarClick" Title="Guardar">
                                     <MudIcon Icon="@Icons.Filled.Save" Size="Size.Large" />
                                 </MudButton>
                                 <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="true" @onclick="BtnAnularClick" Title="Anular Registro">
@@ -56,7 +60,7 @@
                 </MudItem>
             </MudGrid>
 
-            <ConvenioAdd urlParametersDTO="@urlParametersDTO" />
+            <ConvenioAdd  @ref="convenioAdd" urlParametersDTO="@urlParametersDTO" SetContinue="GuardarFormularioCliente"  />
 
         }
         else
