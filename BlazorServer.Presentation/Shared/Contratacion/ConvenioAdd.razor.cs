@@ -18,7 +18,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public ConvenioDTO ConvenioModel = new ConvenioDTO();
         private List<Dato> _clasesJuridicas = new List<Dato>();
 
-        private bool expandPanel = true;
+        private bool expandPanel = false;
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
