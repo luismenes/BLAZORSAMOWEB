@@ -1,4 +1,6 @@
-﻿using BlazorServer.DTO.Request;
+﻿using BlazorServer.DataAccess.Models;
+using BlazorServer.DTO.Request;
+using BlazorServer.DTO.Request.Contratacion;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
@@ -13,50 +15,25 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private MudDatePicker _pickerFinConvenio;
         private MudDatePicker _pickerInicioPrestacion;
         private MudDatePicker _pickerFinPrestacion;
+        public ConvenioDTO ConvenioModel = new ConvenioDTO();
+        private List<Dato> _clasesJuridicas = new List<Dato>();
 
-        private string codigoGeneral;
-        private string nombreGeneral;
-        private string paisGeneral;
-        private string claseGeneral;
-        private string buscarTercero;
-        private string nombreTercero;
-        private string codigoRips;
-        private string tipoGeneral;
-        private string origenGeneral;
-        private string tipoRegimen;
-        private string poblacionAtender;
-        private DateTime? fechaInicioConvenio;
-        private DateTime? fechaFinConvenio;
-        private DateTime? fechaInicioPrestacion;
-        private DateTime? fechaFinPrestacion;
-        private bool todasLasSedes;
-        private bool aceptaBeneficiarios;
-        private bool activo = true;
-        private bool justificacionNoPos;
-
-        private bool expandPanel = false;
-
-        private List<Tercero> terceros; // Asume que tienes una lista de terceros
-        private Tercero selectedTercero; // Asume que tienes un objeto tercero seleccionado
-
-        private void BuscarTercero()
+        private bool expandPanel = true;
+        protected override async Task OnInitializedAsync()
         {
-            // Lógica para buscar terceros
-            expandPanel = true;
+            _swaAlerts.ShowLoading();
+            await CargarSelectores();
+            _swaAlerts.ShowLoadingClose();
         }
 
+        private async Task CargarSelectores()
+        {
+            _clasesJuridicas = await TablaDatoService.ObtenerClaseEntidadesJuridicaAsync();
+        }
 
         private void GuardarDatosBasicos()
         {
             // Lógica para guardar datos
-        }
-
-        // Clase de ejemplo para Tercero
-        public class Tercero
-        {
-            public string NombreCompleto { get; set; }
-            public string NumeroIdentificacion { get; set; }
-            public string CodigoRips { get; set; }
         }
 
         // Métodos para manejar las acciones de los MudDatePicker

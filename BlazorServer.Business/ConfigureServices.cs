@@ -1,6 +1,7 @@
 ﻿using BlazorServer.Business.BLL;
 using BlazorServer.Business.BLL.BaseBLL;
 using BlazorServer.Business.BLL.EncryDecrypt;
+using BlazorServer.Business.BLL.TablaDatos;
 using BlazorServer.Business.Interfaces;
 using BlazorServer.Business.Interfaces.BaseBLL;
 using BlazorServer.Business.Interfaces.EncryDecrypt;
@@ -25,6 +26,8 @@ namespace BlazorServer.Business
             services.AddScoped(typeof(IEncryDecrypt), typeof(EncryDecrypt));
             services.AddScoped(typeof(IUser), typeof(UserRedis));
             services.AddScoped(typeof(IEntidadSamo), typeof(EntidadSamo));
+            services.AddScoped<TablaDatoService>();
+
             services.AddDataServices(configuration);
             return services;
         }

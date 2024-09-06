@@ -62,5 +62,13 @@ namespace BlazorServer.Business.BLL
                 TotalPaginas = totalPaginas
             };
         }
+
+        public async Task<Entidad> ObtenerEntidad(long entidadID)
+        {
+            return await _samoContext.Entidads
+                    .Include(e => e.IdTipoIdentificacionNavigation) // Incluye la propiedad de navegación
+                    .Where(x => x.Id == entidadID && x.Activo == true)
+                    .FirstOrDefaultAsync();
+        }
     }
 }
