@@ -23,12 +23,49 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private int paginaActual = 1;
         private int totalPaginas = 1;
         private const int tamañoPagina = 10;
+        private bool isGuardarDisabled = true;
+        private bool isAnularDisabled = true;
+        private bool isNuevoDisabled = false;
+        private bool isComponentConsulta = true;
+        private bool isComponentAdd = false;
 
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
             await CargarDatos();
             _swaAlerts.ShowLoadingClose();
+        }
+
+        public void BtnNuevoClick()
+        {
+            isGuardarDisabled = false;
+            isAnularDisabled = false;
+            isNuevoDisabled = true;
+            isComponentConsulta = false;
+            isComponentAdd = true;
+
+        }
+
+        private void BtnGuardarClick()
+        {
+            convenioAdd.GuardarDatosBasicos();
+
+        }
+
+        private void BtnAnularClick()
+        {
+            LimpiarFormulario();
+        }
+
+
+        private void LimpiarFormulario()
+        {
+            convenioAdd.LimpiarFormulario();
+            isGuardarDisabled = true;
+            isAnularDisabled = true;
+            isNuevoDisabled = false;
+            isComponentConsulta = true;
+            isComponentAdd = false;
         }
 
         private async Task Filtrar()
@@ -86,6 +123,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         public async Task EditarFormularioCliente(ConvenioDTO formCliente)
         {
+            BtnNuevoClick();
             StateHasChanged(); // Forzar la actualización de la UI
 
             await Task.Delay(100); // Esperar a que los componentes se rendericen completamente
@@ -104,7 +142,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
                 var guardarExitoso = await GuardarConvenio(formCliente);
                 if (guardarExitoso)
                 {
-                    convenioAdd.LimpiarFormulario();
+                    LimpiarFormulario();
                     await MostrarMensajeExitoso("El formulario se guardó correctamente.");
                 }
                 else

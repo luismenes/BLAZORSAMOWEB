@@ -15,11 +15,7 @@ namespace BlazorServer.Presentation.Pages.Contratacion
 
         private UrlParametersDTO urlParametersDTO { get; set; } = new UrlParametersDTO();
         private bool? isAuthorized = null;
-        private bool isGuardarDisabled = true;
-        private bool isAnularDisabled = true;
-        private bool isNuevoDisabled = false;
-        private bool isComponentConsulta = true;
-        private bool isComponentAdd = false;
+
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -27,26 +23,6 @@ namespace BlazorServer.Presentation.Pages.Contratacion
                 await obtenerParametrosUrl();
                 await IsLoggedIn();
             }
-        }
-        public void BtnNuevoClick()
-        {
-            isGuardarDisabled = false;
-            isAnularDisabled = false;
-            isNuevoDisabled = true;
-            isComponentConsulta = false;
-            isComponentAdd = true;
-
-        }
-
-        private void BtnGuardarClick()
-        {
-            //convenioAdd.GuardarDatosBasicos();
-
-        }
-
-        private void BtnAnularClick()
-        {
-            LimpiarFormulario();
         }
 
         private async Task obtenerParametrosUrl()
@@ -72,24 +48,11 @@ namespace BlazorServer.Presentation.Pages.Contratacion
             StateHasChanged();
         }
 
-     
-
-        private void LimpiarFormulario()
-        {
-            isGuardarDisabled = true;
-            isAnularDisabled = true;
-            isNuevoDisabled = false;
-            isComponentConsulta = true;
-            isComponentAdd = false;
-        }
-
-    
 
         private async Task EditarFormularioCliente(ConvenioDTO formCliente)
         {
             if (convenioAll != null)
             {
-                BtnNuevoClick();
                 await convenioAll.EditarFormularioCliente(formCliente);
             }
 

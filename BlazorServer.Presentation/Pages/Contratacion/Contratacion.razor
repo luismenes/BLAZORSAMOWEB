@@ -16,55 +16,8 @@
 }
 else if (isAuthorized == true)
 {
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <h4 class="mb-sm-0 btn-outline-primary">Gestión Contratación</h4>
-                    </ol>
-                </div>
-
-                <div class="page-title-right">
-                    <ol class="breadcrumb m-0">
-                        <li class="breadcrumb-item"><a>Consulta Contratos</a></li>
-                        <li class="breadcrumb-item active">Gestiona Contratos</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <MudCard>
-            <div class="card">
-                <div class="card-body align-items-center d-flex">
-                    <h4 class="card-title mb-0 flex-grow-1">
-
-                        <MudItem xs="0">
-                            <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" Disabled="@isNuevoDisabled" @onclick="BtnNuevoClick" Title="Nuevo Registro">
-                                <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
-                            </MudButton>
-                            <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="@isGuardarDisabled" @onclick="BtnGuardarClick" Title="Guardar">
-                                <MudIcon Icon="@Icons.Filled.Save" Size="Size.Large" />
-                            </MudButton>
-                            <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="@isAnularDisabled" @onclick="BtnAnularClick" Title="Anular Registro">
-                                <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
-                            </MudButton>
-                            @* <MudButton Variant="Radzen.Variant.Outlined" Color="Color.Primary" Class="mb-2" Icon="@Icons.Material.Filled.Search" @onclick="BtnBuscarClick" Title="Buscar Registro">
-                        <MudIcon Icon="@Icons.Filled.Search" Size="Size.Large" />
-                        </MudButton>*@
-                        </MudItem>
-                    </h4>
-                </div>
-            </div>
-        </MudCard>
-    </div>
 
     <ConvenioAll @ref="convenioAll" urlParametersDTO="@urlParametersDTO" SetContinue="EditarFormularioCliente"></ConvenioAll>
-
-
-
 
 }
 else

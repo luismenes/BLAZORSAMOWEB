@@ -233,6 +233,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             LimpiarFormulario();
             // Asignar valores a las propiedades del componente
             ConvenioModel.Nombre = convenio.Nombre;
+            ConvenioModel.Codigo = convenio.Codigo;
             ConvenioModel.TipoConvenioId = convenio.TipoConvenioId; // Si TipoConvenioId es nullable
             ConvenioModel.ClaseId = convenio.ClaseId;
             ConvenioModel.EntidadId = convenio.EntidadId;
