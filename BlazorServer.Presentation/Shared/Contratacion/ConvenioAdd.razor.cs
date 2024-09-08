@@ -1,4 +1,6 @@
-﻿using BlazorServer.Common.Helpers;
+﻿using BlazorServer.Business.BLL;
+using BlazorServer.Business.Interfaces;
+using BlazorServer.Common.Helpers;
 using BlazorServer.DataAccess.Models;
 using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
@@ -10,11 +12,11 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 {
     public partial class ConvenioAdd
     {
+
         [Parameter]
         public UrlParametersDTO urlParametersDTO { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinue { get; set; }
-
 
         public CustomValidation? customValidation;
         // Referencias a los MudDatePicker
@@ -29,11 +31,21 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private List<Dato> _Origen = new List<Dato>();
 
         private bool expandPanel = false;
+
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
             await CargarSelectores();
             _swaAlerts.ShowLoadingClose();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // El componente ha terminado de renderizarse
+                await Task.Delay(100); // Opcional: Un breve retraso para asegurar que todo esté listo
+            }
         }
 
         private async Task CargarSelectores()
@@ -213,6 +225,45 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             ConvenioModel = new ConvenioDTO();
             expandPanel = false;
             customValidation?.ClearErrors();
+        }
+
+
+        public async Task AsignarValoresConvenio(ConvenioDTO convenio)
+        {
+            LimpiarFormulario();
+            // Asignar valores a las propiedades del componente
+            ConvenioModel.Nombre = convenio.Nombre;
+            ConvenioModel.TipoConvenioId = convenio.TipoConvenioId; // Si TipoConvenioId es nullable
+            ConvenioModel.ClaseId = convenio.ClaseId;
+            ConvenioModel.EntidadId = convenio.EntidadId;
+            ConvenioModel.CodigoEapb = convenio.CodigoEapb;
+            ConvenioModel.OrigenConvenioId = convenio.OrigenConvenioId;
+            ConvenioModel.TipoUserRegimen = convenio.TipoUserRegimen;
+            ConvenioModel.PoblacionAtiende = convenio.PoblacionAtiende;
+            ConvenioModel.FechaInicio = convenio.FechaInicio;
+            ConvenioModel.FechaFin = convenio.FechaFin;
+            ConvenioModel.FechaPrestaInicio = convenio.FechaPrestaInicio;
+            ConvenioModel.FechaPrestaFin = convenio.FechaPrestaFin;
+            ConvenioModel.EsTodaSede = convenio.EsTodaSede;
+            ConvenioModel.EsConBeneficiarios = convenio.EsConBeneficiarios;
+            ConvenioModel.EsJustNoPos = convenio.EsJustNoPos;
+            ConvenioModel.Id = convenio.Id;
+
+            IEntidadSamo EntidadService = new EntidadSamo();
+            var resultado = await EntidadService.ObtenerEntidad(convenio.EntidadId);
+
+            if (resultado != null)
+            {
+                string NombreEntidad = resultado.TipoPersonaId == 134 ? resultado.NombreCompleto : resultado.RazonSocial;
+                string NombreDocumento = (resultado.IdTipoIdentificacionNavigation.Nombre ?? string.Empty) + " - " +
+                        (resultado.TipoPersonaId == 134 ? resultado.NumeroIdentificacion :
+                        $"{resultado.NumeroIdentificacion} - {resultado.DigitoVerificacion}");
+
+                ConvenioModel.NombreEntidad = NombreDocumento + " " + NombreEntidad;
+
+            }
+            StateHasChanged();
+
         }
     }
 }

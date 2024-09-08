@@ -5,14 +5,13 @@
 }
 
 html, body {
-    font-family: 'Nunito sans', sans-serif !important;
     font-size: 16px;
     font-weight: 600;
     line-height: 1.5em !important;
+    background-color: #F1F1F1 !important;
 }
 
 p {
-    font-family: 'Nunito Sans', sans-serif !important;
     font-size: 16px;
     font-weight: 300; /* Cambiado a un peso más ligero */
     line-height: 1.5em !important;
@@ -583,5 +582,3 @@ footer .gov-co-link-presentacion {
     letter-spacing: inherit;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-
-

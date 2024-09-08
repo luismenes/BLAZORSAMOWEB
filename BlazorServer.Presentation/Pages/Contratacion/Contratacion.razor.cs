@@ -11,11 +11,15 @@ namespace BlazorServer.Presentation.Pages.Contratacion
         [Parameter]
         public string? param { get; set; }
 
-        private ConvenioAdd convenioAdd;
-        private RequestContratacion model { get; set; } = new RequestContratacion();
+        private ConvenioAll convenioAll;
 
         private UrlParametersDTO urlParametersDTO { get; set; } = new UrlParametersDTO();
         private bool? isAuthorized = null;
+        private bool isGuardarDisabled = true;
+        private bool isAnularDisabled = true;
+        private bool isNuevoDisabled = false;
+        private bool isComponentConsulta = true;
+        private bool isComponentAdd = false;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
@@ -24,20 +28,25 @@ namespace BlazorServer.Presentation.Pages.Contratacion
                 await IsLoggedIn();
             }
         }
-        private void BtnNuevoClick()
+        public void BtnNuevoClick()
         {
-            // Acción para el botón Nuevo
+            isGuardarDisabled = false;
+            isAnularDisabled = false;
+            isNuevoDisabled = true;
+            isComponentConsulta = false;
+            isComponentAdd = true;
+
         }
 
         private void BtnGuardarClick()
         {
-            convenioAdd.GuardarDatosBasicos();
+            //convenioAdd.GuardarDatosBasicos();
 
         }
 
         private void BtnAnularClick()
         {
-            // Acción para el botón Anular
+            LimpiarFormulario();
         }
 
         private async Task obtenerParametrosUrl()
@@ -63,72 +72,27 @@ namespace BlazorServer.Presentation.Pages.Contratacion
             StateHasChanged();
         }
 
-        private async Task GuardarFormularioCliente(ConvenioDTO formCliente)
-        {
-            try
-            {
-                model.Datos = formCliente;
-                var guardarExitoso = await GuardarConvenio(formCliente);
-                if (guardarExitoso)
-                {
-                    LimpiarFormulario();
-                    await MostrarMensajeExitoso("El formulario se guardó correctamente.");
-                }
-                else
-                {
-                    await MostrarMensajeError("No fue posible realizar el registro del formulario.");
-                }
-            }
-            catch (Exception ex)
-            {
-                await MostrarMensajeError($"Ocurrió un error: {ex.Message}");
-            }
-
-            StateHasChanged();
-        }
-
-        private async Task<bool> GuardarConvenio(ConvenioDTO formCliente)
-        {
-            return await _ConveniosSAMService.SaveManagement(formCliente);
-        }
+     
 
         private void LimpiarFormulario()
         {
-            convenioAdd.LimpiarFormulario();
+            isGuardarDisabled = true;
+            isAnularDisabled = true;
+            isNuevoDisabled = false;
+            isComponentConsulta = true;
+            isComponentAdd = false;
         }
 
-        private async Task MostrarMensajeExitoso(string mensaje)
+    
+
+        private async Task EditarFormularioCliente(ConvenioDTO formCliente)
         {
-            var options = new
+            if (convenioAll != null)
             {
-                title = mensaje,
-                icon = "success",
-                confirmButtonText = "Entendido",
-                confirmButtonColor = "#28a745", // Verde para mensajes de éxito
-                customClass = new
-                {
-                    confirmButton = "btn-success"
-                }
-            };
+                BtnNuevoClick();
+                await convenioAll.EditarFormularioCliente(formCliente);
+            }
 
-            await JSRuntime.InvokeVoidAsync("Swal.fire", options);
-        }
-
-        private async Task MostrarMensajeError(string mensaje)
-        {
-            var options = new
-            {
-                title = mensaje,
-                icon = "error",
-                confirmButtonText = "Entendido",
-                confirmButtonColor = "#d33", // Rojo para mensajes de error
-                customClass = new
-                {
-                    confirmButton = "btn-danger"
-                }
-            };
-
-            await JSRuntime.InvokeVoidAsync("Swal.fire", options);
         }
 
     }

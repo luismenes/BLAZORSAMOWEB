@@ -1,0 +1,101 @@
+﻿@using BlazorServer.Business.Interfaces.Contratacion
+@inject IConveniosSAM ConveniosSAMService
+@inject IConveniosSAM _ConveniosSAMService
+@inject IJSRuntime JSRuntime
+<ConvenioAdd @ref="convenioAdd" urlParametersDTO="@urlParametersDTO" SetContinue="GuardarFormularioCliente" />
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header d-flex align-items-center highlight-toolbar bg-light ps-3 pe-2 py-1">
+            <h4 class="font-monospace text-muted text-uppercase"><strong>Filtros</strong></h4>
+        </div>
+
+
+        <div class="col-lg-12">
+            <br />
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre Convenio:</MudText>
+                    <MudTextField @bind-Value="nombreConvenio" @oninput="e => OnInputHandler(e)" Variant="MudBlazor.Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo Convenio:</MudText>
+                    <MudTextField @bind-Value="tipoConvenio" Variant="MudBlazor.Variant.Outlined" />
+                </MudItem>
+
+            </MudGrid>
+            <br />
+        </div>
+
+    </div>
+</div>
+<div class="col-lg-12">
+    <div class="card">
+
+        @if (mostrarMensaje)
+        {
+            <MudAlert Severity="Severity.Info">
+                ***** No se encuentran registros *****
+            </MudAlert>
+        }
+        else
+        {
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover w-100 dataTable small">
+                        <thead class="thead-light outline-badge-primary">
+                            <tr>
+                                <MudTh>Código Convenio</MudTh>
+                                <MudTh>Nombre Convenio</MudTh>
+                                <MudTh>Tipo Convenio</MudTh>
+                                <MudTh>Estado</MudTh>
+                                <MudTh>Acciones</MudTh>
+                            </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                            @foreach (var entidad in listaConvenios)
+                            {
+                                <MudTr>
+
+                                    <MudTd>@entidad.Codigo</MudTd>
+                                    <MudTd>@entidad.Nombre</MudTd>
+                                    <MudTd>@entidad.TipoConvenio</MudTd>
+                                    <MudTd Align="Center">
+                                        <span class="@entidad.EstadoClass">@GetEstado((bool)entidad.Activo)</span>
+                                    </MudTd>
+                                    <MudTd>
+                                        <button Class="btn btn-outline-info btn-icon waves-effect waves-light"
+                                        @onclick="() => EditarConvenioAsync(entidad.Id)"
+                                        Title="Editar">
+                                            <i class="las la-user-alt"></i>
+                                        </button>
+
+                                        <button class="@entidad.EstadoColor"
+                                        @onclick="() => CambiarEstado(entidad.Id)"
+                                        title="@entidad.EstadoTooltip">
+                                            <i class="@entidad.IconClass"></i>
+                                        </button>
+                                    </MudTd>
+
+                                </MudTr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Paginación -->
+                <div class="d-flex justify-content-center mt-4">
+                    <MudPagination ShowFirstButton="true" ShowLastButton="true"
+                               Variant="MudBlazor.Variant.Outlined"
+                               Size="Size.Small"
+                               Color="Color.Info"
+                               Count="@totalPaginas"
+                               SelectedChanged="OnPageChanged"
+                               Selected="@paginaActual" />
+                </div>
+            </div>
+
+
+
+        }
+    </div>
+</div>
+
