@@ -199,5 +199,30 @@ namespace BlazorServer.Business.BLL.Contratacion
             }
 
         }
+
+        public async Task<bool> CambiarEstadoConvenio(long id, long usuarioId)
+        {
+            try
+            {
+                using (SamoContext db = new SamoContext())
+                {
+                    var convenio = await db.Convenios.FirstOrDefaultAsync(c => c.Id == id);
+                    if (convenio == null) return false;
+
+                    // Cambiar el estado (activo a inactivo y viceversa)
+                    convenio.Activo = !convenio.Activo;
+                    convenio.UsuarioActualizaId = usuarioId;
+                    convenio.FechaActualizacion = DateTime.Now;
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+                // Manejo de errores
+                return false;
+            }
+        }
+
     }
 }

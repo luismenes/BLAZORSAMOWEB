@@ -16,6 +16,7 @@ namespace BlazorServer.Business.Interfaces.Contratacion
         Task<PaginacionResult<ConveDto>> ObtenerConvenios(string nombreConvenio, long? tipoConvenioId, int pagina, int tamañoPagina, long operacionId);
         Task<bool> UpdateManagement(ConvenioDTO Register);
         Task<ConvenioDTO> EditarConvenio(long id);
+        Task<bool> CambiarEstadoConvenio(long id, long usuarioId);
 
     }
 }

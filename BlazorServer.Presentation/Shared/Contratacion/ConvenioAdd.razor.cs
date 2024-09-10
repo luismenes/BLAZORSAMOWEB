@@ -150,8 +150,12 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             }
             else
             {
-
                 ConvenioDTO clienteRequest = new ConvenioDTO();
+                if (ConvenioModel.Id != 0)
+                {
+                    clienteRequest.Id = ConvenioModel.Id;
+
+                }
                 clienteRequest.Codigo = ConvenioModel.Codigo;
                 clienteRequest.Nombre = ConvenioModel.Nombre;
                 clienteRequest.NombreEntidad = ConvenioModel.NombreEntidad;

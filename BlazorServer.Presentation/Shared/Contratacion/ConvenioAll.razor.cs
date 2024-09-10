@@ -1,5 +1,6 @@
 ﻿using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
+using BlazorServer.Presentation.Shared.GlobalesComponet;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using static BlazorServer.Business.BLL.Contratacion.ConveniosSAM;
@@ -110,9 +111,22 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             return activo ? "Activo" : "Inactivo";
         }
 
-        private void CambiarEstado(long id)
+        private  async Task CambiarEstado(long id)
         {
-            // Lógica para cambiar el estado del convenio (Activo/Inactivo)
+            bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
+
+            if (confirmacion)
+            {
+                
+                bool resultado = await ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(urlParametersDTO.UserId));
+
+                if (resultado)
+                {
+                    // Mostrar un mensaje de éxito
+                    await MostrarMensajeExitoso("El estado del convenio ha sido cambiado exitosamente.");
+                }
+                await CargarDatos();
+            }
         }
 
         private void OnInputHandler(ChangeEventArgs e)
@@ -144,6 +158,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
                 {
                     LimpiarFormulario();
                     await MostrarMensajeExitoso("El formulario se guardó correctamente.");
+                    await CargarDatos();
                 }
                 else
                 {
@@ -160,7 +175,16 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private async Task<bool> GuardarConvenio(ConvenioDTO formCliente)
         {
-            return await _ConveniosSAMService.SaveManagement(formCliente);
+            if (formCliente.Id != 0)
+            {
+                return await _ConveniosSAMService.UpdateManagement(formCliente);
+
+            }
+            else
+            {
+
+                return await _ConveniosSAMService.SaveManagement(formCliente);
+            }
         }
 
         private async Task MostrarMensajeExitoso(string mensaje)
@@ -195,6 +219,25 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             };
 
             await JSRuntime.InvokeVoidAsync("Swal.fire", options);
+        }
+
+        public async Task<bool> MostrarConfirmacion(string mensaje)
+        {
+            var options = new
+            {
+                title = mensaje,
+                icon = "warning",
+                showCancelButton = true,
+                confirmButtonText = "Sí, cambiar estado",
+                cancelButtonText = "Cancelar",
+                confirmButtonColor = "#d33", // Rojo para el botón de confirmación
+                cancelButtonColor = "#3085d6" // Azul para el botón de cancelar
+            };
+
+            // La llamada a InvokeAsync debería recibir el tipo adecuado, que es un booleano
+            var result = await JSRuntime.InvokeAsync<bool>("mostrarConfirmacion", options);
+
+            return result; // Devuelve true si el usuario confirma la acción
         }
     }
 }
