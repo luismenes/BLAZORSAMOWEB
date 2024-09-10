@@ -29,7 +29,8 @@
                                     <MudItem xs="12" md="12">
 
                                         <MudText Typo="Typo.subtitle2" Class="mb-1">Identificación:</MudText>
-                                        <MudTextField @bind-Value="identificacion" Variant="MudBlazor.Variant.Outlined" />
+                                        <MudTextField ValueChanged="@(async (string e) => await OnStringChanged(e))"
+                                                      Variant="MudBlazor.Variant.Outlined" />
                                     </MudItem>
                                     <MudItem xs="12" md="12">
 

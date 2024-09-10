@@ -17,7 +17,7 @@ namespace BlazorServer.Business.BLL
 
         public EntidadSamo()
         {
-            
+
         }
         public class EntidadDto
         {
@@ -35,7 +35,7 @@ namespace BlazorServer.Business.BLL
                 var query = db.Entidads
                 .Where(c => c.OperacionId == operacionId && c.Activo == true &&
                     (documentoIdentidadID == null || c.IdTipoIdentificacion == documentoIdentidadID) &&
-                    (string.IsNullOrWhiteSpace(identificacion) || c.NumeroIdentificacion == identificacion) &&
+                    (string.IsNullOrWhiteSpace(identificacion) || c.NumeroIdentificacion.Contains(identificacion)) &&
                     (ClaseId == null || c.ClaseEntidads.Any(ce => ce.ClaseEntidadId == ClaseId)));
 
                 var totalElementos = await query.CountAsync();

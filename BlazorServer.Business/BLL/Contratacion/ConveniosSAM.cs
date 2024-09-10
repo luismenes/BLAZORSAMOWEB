@@ -41,7 +41,7 @@ namespace BlazorServer.Business.BLL.Contratacion
                 var query = db.Convenios
                 .Where(c => c.OperacionId == operacionId &&
                     (tipoConvenioId == 0 || c.TipoConvenioId == tipoConvenioId) &&
-                    (string.IsNullOrWhiteSpace(nombreConvenio) || c.Nombre == nombreConvenio));
+                    (string.IsNullOrWhiteSpace(nombreConvenio) || c.Nombre.Contains(nombreConvenio)));
 
                 var totalElementos = await query.CountAsync();
 

@@ -1,9 +1,10 @@
-﻿@using BlazorServer.Business.Interfaces.Contratacion
+﻿@using BlazorServer.Business.BLL.TablaDatos
+@using BlazorServer.Business.Interfaces.Contratacion
+@using BlazorServer.DataAccess.Models
 @using BlazorServer.Presentation.Shared.GlobalesComponet
-@inject IConveniosSAM ConveniosSAMService
 @inject IConveniosSAM _ConveniosSAMService
 @inject IJSRuntime JSRuntime
-
+@inject TablaDatoService TablaDatoService
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
@@ -68,11 +69,24 @@ else if (isComponentConsulta)
                 <MudGrid>
                     <MudItem xs="12" md="6">
                         <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre Convenio:</MudText>
-                        <MudTextField @bind-Value="nombreConvenio" @oninput="e => OnInputHandler(e)" Variant="MudBlazor.Variant.Outlined" />
+                        <MudTextField ValueChanged="@(async (string e) => await OnNombreConvenioChanged(e))"
+                                  Variant="MudBlazor.Variant.Outlined" />
                     </MudItem>
                     <MudItem xs="12" md="6">
                         <MudText Typo="Typo.subtitle2" Class="mb-1">Tipo Convenio:</MudText>
-                        <MudTextField @bind-Value="tipoConvenio" Variant="MudBlazor.Variant.Outlined" />
+                        <RadzenDropDown TValue="long"
+                                    Class="w-100"
+                                    Placeholder="Selecciona una opción..."
+                                    Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_tipoConvenios))"
+                                    TextProperty="Nombre"
+                                    ValueProperty="Id"
+                                    AllowFiltering="true"
+                                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    ValueChanged="@(async (long id) => await HandleSelectionChange(id))"
+                                    ValueExpression="@(() => tipoConvenio)"
+                                    Value="tipoConvenio" />
+                        @*                        <MudTextField @bind-Value="tipoConvenio" Variant="MudBlazor.Variant.Outlined" />
+                    *@
                     </MudItem>
 
                 </MudGrid>

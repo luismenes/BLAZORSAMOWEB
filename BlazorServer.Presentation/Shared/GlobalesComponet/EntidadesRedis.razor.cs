@@ -24,7 +24,7 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
         private int tamañoPagina = 5; // Ajusta según el tamaño de la página deseado
         private List<Dato> _tiposDocumentos = new List<Dato>();
         private bool disabledTipoIdentidad;
-
+        private long? ClassIds = null;
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
@@ -53,6 +53,7 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
             // Si se proporciona ClassId, busca el tipo de documento seleccionado
             if (ClassId != null)
             {
+                ClassIds = ClassId;
                 var documentoSeleccionado = _tiposDocumentos.FirstOrDefault(t => t.Id == 126);
                 disabledTipoIdentidad = true;
                 if (documentoSeleccionado != null)
@@ -144,5 +145,10 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
             StateHasChanged();
         }
 
+        private async Task OnStringChanged(string newValue)
+        {
+            identificacion = newValue;
+            await CargarDatos(ClassIds);
+        }
     }
 }

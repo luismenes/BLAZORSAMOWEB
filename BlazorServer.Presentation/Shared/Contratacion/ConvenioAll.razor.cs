@@ -1,4 +1,5 @@
-﻿using BlazorServer.DTO.Request;
+﻿using BlazorServer.DataAccess.Models;
+using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
 using BlazorServer.Presentation.Shared.GlobalesComponet;
 using Microsoft.AspNetCore.Components;
@@ -29,14 +30,20 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private bool isNuevoDisabled = false;
         private bool isComponentConsulta = true;
         private bool isComponentAdd = false;
+        private List<Dato> _tipoConvenios = new List<Dato>();
 
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
+            await CargarSelectores();
             await CargarDatos();
             _swaAlerts.ShowLoadingClose();
         }
+        private async Task CargarSelectores()
+        {
 
+            _tipoConvenios = await TablaDatoService.ObtenerDatosTablaAsync(50);
+        }
         public void BtnNuevoClick()
         {
             isGuardarDisabled = false;
@@ -91,7 +98,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private async Task EditarConvenioAsync(long id)
         {
 
-            var resultado = await ConveniosSAMService.EditarConvenio(id);
+            var resultado = await _ConveniosSAMService.EditarConvenio(id);
             await SetContinue.InvokeAsync(resultado);
 
 
@@ -99,7 +106,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private async Task CargarDatos()
         {
-            var resultado = await ConveniosSAMService.ObtenerConvenios(nombreConvenio, tipoConvenio, paginaActual, tamañoPagina, Convert.ToInt64(urlParametersDTO.KeySession));
+            var resultado = await _ConveniosSAMService.ObtenerConvenios(nombreConvenio, tipoConvenio, paginaActual, tamañoPagina, Convert.ToInt64(urlParametersDTO.KeySession));
             listaConvenios = resultado.Elementos;
             totalPaginas = resultado.TotalPaginas;
             mostrarMensaje = listaConvenios.Count == 0;
@@ -118,7 +125,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             if (confirmacion)
             {
 
-                bool resultado = await ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(urlParametersDTO.UserId));
+                bool resultado = await _ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(urlParametersDTO.UserId));
 
                 if (resultado)
                 {
@@ -129,10 +136,10 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             }
         }
 
-        private void OnInputHandler(ChangeEventArgs e)
+        private async Task OnNombreConvenioChanged(string newValue)
         {
-            nombreConvenio = e.Value.ToString();
-            Filtrar();
+            nombreConvenio = newValue;
+           await CargarDatos();
         }
 
         public async Task EditarFormularioCliente(ConvenioDTO formCliente)
@@ -240,6 +247,18 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             return result; // Devuelve true si el usuario confirma la acción
         }
 
+        private async Task HandleSelectionChange(long selectedId)
+        {
+            _swaAlerts.ShowLoading();
+            if (selectedId != 0)
+            {
+                tipoConvenio = 0;
+            }
 
+            tipoConvenio = selectedId;
+            await CargarDatos();
+            _swaAlerts.ShowLoadingClose();
+            StateHasChanged();
+        }
     }
 }
