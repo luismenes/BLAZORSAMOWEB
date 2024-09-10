@@ -111,13 +111,13 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             return activo ? "Activo" : "Inactivo";
         }
 
-        private  async Task CambiarEstado(long id)
+        private async Task CambiarEstado(long id)
         {
             bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
 
             if (confirmacion)
             {
-                
+
                 bool resultado = await ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(urlParametersDTO.UserId));
 
                 if (resultado)
@@ -239,5 +239,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
             return result; // Devuelve true si el usuario confirma la acción
         }
+
+
     }
 }

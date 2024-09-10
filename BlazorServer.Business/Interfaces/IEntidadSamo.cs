@@ -11,7 +11,7 @@ namespace BlazorServer.Business.Interfaces
 {
     public interface IEntidadSamo
     {
-        Task<PaginacionResult<EntidadDto>> ObtenerEntidades(string identificacion, long? documentoIdentidadID, int pagina, int tamañoPagina);
+        Task<PaginacionResult<EntidadDto>> ObtenerEntidades(string identificacion, long? documentoIdentidadID, int pagina, int tamañoPagina, long operacionId, long? ClaseId = null);
         Task<Entidad> ObtenerEntidad(long entidadID);
 
     }

@@ -76,7 +76,7 @@
 
                         @if (expandPanel)
                         {
-                            <EntidadesRedis SetContinue="GuardarFormularioCliente"></EntidadesRedis>
+                            <EntidadesRedis @ref="entidadesRedis" urlParametersDTO="@urlParametersDTO" SetContinue="GuardarFormularioCliente"></EntidadesRedis>
                         }
 
                         <!-- Tipo -->

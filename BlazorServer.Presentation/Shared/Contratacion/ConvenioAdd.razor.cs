@@ -4,6 +4,7 @@ using BlazorServer.Common.Helpers;
 using BlazorServer.DataAccess.Models;
 using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
+using BlazorServer.Presentation.Shared.GlobalesComponet;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
@@ -29,6 +30,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private List<Dato> _regimenUsuario = new List<Dato>();
         private List<Dato> _Tipo = new List<Dato>();
         private List<Dato> _Origen = new List<Dato>();
+        private EntidadesRedis entidadesRedis;
 
         private bool expandPanel = false;
 
@@ -201,9 +203,11 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             }
             ConvenioModel.NombreEntidad = string.Empty;
             ConvenioModel.ClaseId = selectedId;
-
             _swaAlerts.ShowLoadingClose();
             StateHasChanged();
+            await entidadesRedis.CargarDatos(selectedId);
+            StateHasChanged();
+
         }
 
         private async Task GuardarFormularioCliente(EntidadIdDTO formCliente)
@@ -270,5 +274,6 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             StateHasChanged();
 
         }
+
     }
 }

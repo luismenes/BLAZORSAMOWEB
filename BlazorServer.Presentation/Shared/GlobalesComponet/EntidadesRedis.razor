@@ -1,121 +1,143 @@
-﻿@inject IEntidadSamo EntidadService
+﻿@using BlazorServer.Business.BLL.TablaDatos
+@using BlazorServer.DataAccess.Models
+@inject IEntidadSamo EntidadService
+@inject TablaDatoService TablaDatoService
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-content border-top border-danger border-w-5">
+            <div class="card outline-badge-primary">
+                <div class="card-content">
+                    <div class="card-body p-2">
+                        <div>
+                            <MudAlert Severity="Severity.Error" NoIcon="true" Class="my-2"></MudAlert>
 
-<div class="card-content border-top border-danger border-w-5">
-    <div class="card outline-badge-primary">
-        <div class="card-content">
-            <div class="card-body p-2">
-                <div>
-                    <MudAlert Severity="Severity.Error" NoIcon="true" Class="my-2"></MudAlert>
+                        </div>
 
+                    </div>
                 </div>
-
             </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <MudCard>
-                    <MudCardContent>
-                        <MudText Class="strong" typ="h4"><strong>ENTIDADES</strong> </MudText>
-                        <MudText typ="h4">Filtros</MudText>
-                        <MudGrid>
-                            <MudItem xs="12" md="12">
-
-                                <MudText Typo="Typo.subtitle2" Class="mb-1">Identificación:</MudText>
-                                <MudTextField @bind-Value="identificacion" Variant="MudBlazor.Variant.Text" />
-                            </MudItem>
-                            <MudItem xs="12" md="12">
-
-                                <MudText Typo="Typo.subtitle2" Class="mb-1">Documento de Identidad:</MudText>
-                                <MudTextField @bind-Value="documentoIdentidadID" Variant="MudBlazor.Variant.Text" />
-                            </MudItem>
-                            <MudItem xs="12" md="12">
-                                <div class="d-flex justify-content-center">
-
-                                    <MudButton @onclick="Filtrar" Variant="MudBlazor.Variant.Outlined" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary">Buscar</MudButton>
-                                    <MudButton @onclick="LimpiarCampos" Variant="MudBlazor.Variant.Outlined" StartIcon="@Icons.Material.Filled.Clear" Color="Color.Error">Limpiar</MudButton>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <MudCard>
+                            <MudCardContent>
+                                <MudText Class="strong" typ="h4"><strong>ENTIDADES</strong> </MudText>
+                                <div class="card-header d-flex align-items-center highlight-toolbar bg-light ps-3 pe-2 py-1">
+                                    <h4 class="font-monospace text-muted text-uppercase"><strong>Filtros</strong></h4>
                                 </div>
-                            </MudItem>
+                                <MudGrid>
+                                    <MudItem xs="12" md="12">
 
-                        </MudGrid>
-                    </MudCardContent>
-                </MudCard>
-                <div class="card" id="contact-view-detail">
-                    <div class="card-body text-center">
-                        <div class="position-relative d-inline-block">
-                            <img src="/Plantilla/assets/images/users/user-dummy-img.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
-                            <span class="contact-active position-absolute rounded-circle bg-success">
-                                <span class="visually-hidden"></span>
-                            </span>
+                                        <MudText Typo="Typo.subtitle2" Class="mb-1">Identificación:</MudText>
+                                        <MudTextField @bind-Value="identificacion" Variant="MudBlazor.Variant.Outlined" />
+                                    </MudItem>
+                                    <MudItem xs="12" md="12">
+
+                                        <MudText Typo="Typo.subtitle2" Class="mb-1">Documento de Identidad:</MudText>
+                                        <RadzenDropDown TValue="long?"
+                                                        Class="w-100"
+                                                        Placeholder="Selecciona una opción..."
+                                                        Data="@(new List<Dato> { new Dato { Id = 0, Nombre = "Selecciona una opción..." } }.Concat(_tiposDocumentos))"
+                                                        TextProperty="Nombre"
+                                                        ValueProperty="Id"
+                                                        Disabled="disabledTipoIdentidad"
+                                                        AllowFiltering="true"
+                                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                        ValueChanged="@(async (long? id) => await HandleSelectionChange(id))"
+                                                        ValueExpression="@(() => documentoIdentidadID)"
+                                                        Value="documentoIdentidadID" />
+                                        @*                                <MudTextField @bind-Value="documentoIdentidadID" Variant="MudBlazor.Variant.Text" />
+                                        *@
+                                    </MudItem>
+                                    <MudItem xs="12" md="12">
+                                        <div class="d-flex justify-content-center">
+
+                                            @*                                    <MudButton @onclick="Filtrar" Variant="MudBlazor.Variant.Outlined" EndIcon="@Icons.Material.Filled.Send" Color="Color.Primary">Buscar</MudButton>
+                                            *@@*                                    <MudButton @onclick="LimpiarCampos" Variant="MudBlazor.Variant.Outlined" StartIcon="@Icons.Material.Filled.Clear" Color="Color.Error">Limpiar</MudButton>
+                                            *@
+                                        </div>
+                                    </MudItem>
+
+                                </MudGrid>
+                            </MudCardContent>
+                        </MudCard>
+                        <div class="card" id="contact-view-detail">
+                            <div class="card-body text-center">
+                                <div class="position-relative d-inline-block">
+                                    <img src="/Plantilla/assets/images/users/user-dummy-img.jpg" alt="" class="avatar-lg rounded-circle img-thumbnail">
+                                    <span class="contact-active position-absolute rounded-circle bg-success">
+                                        <span class="visually-hidden"></span>
+                                    </span>
+                                </div>
+                                <h5 class="mt-4 mb-1">
+                                    @NombreDocumento
+                                </h5>
+                                <p class="text-muted">
+                                    @NombreEntidad
+                                </p>
+
+
+                            </div>
+
                         </div>
-                        <h5 class="mt-4 mb-1">
-                            @NombreDocumento
-                        </h5>
-                        <p class="text-muted">
-                            @NombreEntidad
-                        </p>
-
-
                     </div>
+                    <div class="col-lg-8">
 
+                        @if (mostrarMensaje)
+                        {
+                            <div class="card card-body text-center">
+                                <div class="alert alert-info alert-border-left alert-dismissible fade show" role="alert">
+                                    <i class="ri-airplay-line me-3 align-middle"></i> <strong>***** No se encuentra registros *****</strong>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-hover w-100 dataTable">
+                                        <thead class="thead-light outline-badge-primary">
+                                            <tr>
+                                                <th>Acciones</th>
+                                                <th>Tipo Persona</th>
+                                                <th>Tipo Documento</th>
+                                                <th>NroDocumento</th>
+                                                <th>Nombre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list form-check-all">
+                                            @foreach (var entidad in listaEntidades)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <button @onclick="() => CargarDatosEntidad(entidad.Id)" class="btn btn-outline-info">
+                                                            <i class="las la-user-alt"></i>
+                                                        </button>
+                                                    </td>
+                                                    <td class="badge bg-danger-subtle text-danger badge-border">@entidad.TipoPersona</td>
+                                                    <td>@entidad.TipoIdentificacion</td>
+                                                    <td>@entidad.Documento</td>
+                                                    <td>@entidad.NombreEntidad</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-center mt-4">
+
+                                    <MudPagination ShowFirstButton="true" ShowLastButton="true"
+                                               Variant="MudBlazor.Variant.Outlined"
+                                               Size="Size.Small"
+                                               Color="Color.Info"
+                                               Count="@totalPaginas"
+                                               SelectedChanged="OnPageChanged"
+                                               Selected="@paginaActual" />
+
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-8">
-
-                @if (mostrarMensaje)
-                {
-                    <div class="card card-body text-center">
-                        <div class="alert alert-info alert-border-left alert-dismissible fade show" role="alert">
-                            <i class="ri-airplay-line me-3 align-middle"></i> <strong>***** No se encuentra registros *****</strong>
-                        </div>
-                    </div>
-                }
-                else
-                {
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover w-100 dataTable">
-                                <thead class="thead-light outline-badge-primary">
-                                    <tr>
-                                        <th>Acciones</th>
-                                        <th>Tipo Persona</th>
-                                        <th>Tipo Documento</th>
-                                        <th>NroDocumento</th>
-                                        <th>Nombre</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="list form-check-all">
-                                    @foreach (var entidad in listaEntidades)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <button @onclick="() => CargarDatosEntidad(entidad.Id)" class="btn btn-outline-info">
-                                                    <i class="las la-user-alt"></i>
-                                                </button>
-                                            </td>
-                                            <td class="badge bg-danger-subtle text-danger badge-border">@entidad.TipoPersona</td>
-                                            <td>@entidad.TipoIdentificacion</td>
-                                            <td>@entidad.Documento</td>
-                                            <td>@entidad.NombreEntidad</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="d-flex justify-content-center mt-4">
-
-                            <MudPagination ShowFirstButton="true" ShowLastButton="true"
-                                       Variant="MudBlazor.Variant.Outlined"
-                                       Size="Size.Small"
-                                       Color="Color.Info"
-                                       Count="@totalPaginas"
-                                       SelectedChanged="OnPageChanged"
-                                       Selected="@paginaActual" />
-
-                        </div>
-                    </div>
-                }
             </div>
         </div>
     </div>
