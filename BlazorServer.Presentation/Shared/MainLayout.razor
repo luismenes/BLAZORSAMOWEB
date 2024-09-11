@@ -1,5 +1,7 @@
 ﻿@using BlazorServer.Business.BLL.BaseBLL
 @using MudBlazor
+@using Radzen
+@using Radzen.Blazor
 @inherits LayoutComponentBase
 @inject GlobalStateService AuthorizationService
 @inject NavigationManager Navigation
@@ -35,6 +37,7 @@ else
 }
 
 @code {
+
     protected override async Task OnInitializedAsync()
     {
         // Extraer el parámetro de la URL
