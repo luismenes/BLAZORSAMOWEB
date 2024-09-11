@@ -13,8 +13,6 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private RequestContratacion model { get; set; } = new RequestContratacion();
 
         [Parameter]
-        public UrlParametersDTO urlParametersDTO { get; set; }
-        [Parameter]
         public EventCallback<ConvenioDTO> SetContinue { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
@@ -116,7 +114,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private async Task CargarDatos()
         {
-            var resultado = await _ConveniosSAMService.ObtenerConvenios(nombreConvenio, tipoConvenio, paginaActual, tamañoPagina, Convert.ToInt64(urlParametersDTO.KeySession));
+            var resultado = await _ConveniosSAMService.ObtenerConvenios(nombreConvenio, tipoConvenio, paginaActual, tamañoPagina, Convert.ToInt64(AuthorizationService.UrlParametersDTO.KeySession));
             listaConvenios = resultado.Elementos;
             totalPaginas = resultado.TotalPaginas;
             mostrarMensaje = listaConvenios.Count == 0;
@@ -135,7 +133,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             if (confirmacion)
             {
 
-                bool resultado = await _ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(urlParametersDTO.UserId));
+                bool resultado = await _ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(AuthorizationService.UrlParametersDTO.UserId));
 
                 if (resultado)
                 {

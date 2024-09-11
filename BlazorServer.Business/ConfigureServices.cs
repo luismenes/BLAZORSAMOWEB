@@ -30,6 +30,7 @@ namespace BlazorServer.Business
             services.AddScoped(typeof(IEntidadSamo), typeof(EntidadSamo));
             services.AddScoped(typeof(IConveniosSAM), typeof(ConveniosSAM));
             services.AddScoped<TablaDatoService>();
+            services.AddScoped<GlobalStateService>();
 
             services.AddDataServices(configuration);
             return services;

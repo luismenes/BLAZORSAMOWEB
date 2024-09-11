@@ -1,5 +1,8 @@
-﻿@using MudBlazor
+﻿@using BlazorServer.Business.BLL.BaseBLL
+@using MudBlazor
 @inherits LayoutComponentBase
+@inject GlobalStateService AuthorizationService
+@inject NavigationManager Navigation
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -9,15 +12,45 @@
     <link rel="icon" href="~/Plantilla/assets/images/logo-sm.png" type="image/x-icon" />
 </HeadContent>
 
+@if (AuthorizationService.IsAuthorized == null)
+{
+    <div>Cargando...</div>
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else if (AuthorizationService.IsAuthorized == true)
+{
 
-
-<div class="page-content">
-    <div class="container-fluid">
-        <!-- start page title -->
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- start page title -->
         @Body
 
+        </div>
     </div>
-</div>
+
+}
+else
+{
+    <MudAlert Severity="Severity.Error">No autorizado</MudAlert>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        // Extraer el parámetro de la URL
+        var uri = new Uri(Navigation.Uri);
+        var queryParams = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+
+        // Si el parámetro "paramDTO" está presente, usa su valor
+        if (queryParams.TryGetValue("paramDTO", out var param))
+        {
+            await AuthorizationService.SetUrlParameters(param);
+        }
+        // Configurar los parámetros URL en el servicio
+        await AuthorizationService.SetUrlParameters(param);
+
+    }
+}
 
 
 

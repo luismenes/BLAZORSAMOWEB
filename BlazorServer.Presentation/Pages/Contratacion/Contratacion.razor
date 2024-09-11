@@ -1,24 +1,17 @@
 ﻿@page "/contratacion"
 @page "/contratacion/{param}"
+@using BlazorServer.Business.BLL.BaseBLL
 @using BlazorServer.Business.Interfaces.Contratacion
 @using BlazorServer.Presentation.Shared.Contratacion
 @inject IEncryDecrypt _EncryDecrypt
 @inject IConveniosSAM _ConveniosSAMService
-@inject IUser _User
 @inject IJSRuntime JSRuntime
+@inject GlobalStateService AuthorizationService
 
 
-@if (isAuthorized == null)
+@if (AuthorizationService.IsAuthorized == true)
 {
-
-    <div>Cargando...</div>
-    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
-}
-else if (isAuthorized == true)
-{
-
-    <ConvenioAll @ref="convenioAll" urlParametersDTO="@urlParametersDTO" SetContinueConfig="ConfigConvenio" SetContinue="EditarFormularioCliente"></ConvenioAll>
-
+    <ConvenioAll @ref="convenioAll" SetContinueConfig="ConfigConvenio" SetContinue="EditarFormularioCliente"></ConvenioAll>
 }
 else
 {

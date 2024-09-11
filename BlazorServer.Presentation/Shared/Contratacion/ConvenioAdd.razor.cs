@@ -14,8 +14,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
     public partial class ConvenioAdd
     {
 
-        [Parameter]
-        public UrlParametersDTO urlParametersDTO { get; set; }
+      
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinue { get; set; }
 
@@ -174,10 +173,10 @@ namespace BlazorServer.Presentation.Shared.Contratacion
                 clienteRequest.EsTodaSede = ConvenioModel.EsTodaSede;
                 clienteRequest.EsConBeneficiarios = ConvenioModel.EsConBeneficiarios;
                 clienteRequest.EsJustNoPos = ConvenioModel.EsJustNoPos;
-                clienteRequest.OperacionId = Convert.ToInt64(urlParametersDTO.KeySession);
+                clienteRequest.OperacionId = Convert.ToInt64(AuthorizationService.UrlParametersDTO.KeySession);
                 clienteRequest.Estado = true;
                 clienteRequest.FechaCreacion = DateTime.Now;
-                clienteRequest.UsuarioId = Convert.ToInt64(urlParametersDTO.UserId);
+                clienteRequest.UsuarioId = Convert.ToInt64(AuthorizationService.UrlParametersDTO.UserId);
                 clienteRequest.EntidadId = ConvenioModel.EntidadId;
 
                 _swaAlerts.ShowLoadingClose();
