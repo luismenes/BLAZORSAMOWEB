@@ -1,0 +1,140 @@
+﻿<div class="col-lg-12">
+    <div class="card">
+        <div class="card outline-badge-primary">
+            <div class="card-content">
+                <div class="card-body p-2">
+                    <div>
+                        <MudAlert Severity="Severity.Info" ContentAlignment="HorizontalAlignment.Left">Configurar Convenio</MudAlert>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Columnas para las tarjetas -->
+            <div class="col-lg-3">
+                <div class="card">
+                    <MudContainer>
+                        <div class="d-flex flex-column gap-2" style="max-width: 250px;">
+                            <!-- Card 1 -->
+                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(1)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.Album" Size="Size.Large" /> <!-- Icono para "Sedes" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Sedes</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                            <!-- Card 2 -->
+                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(2)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Secondary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Custom.Brands.Reddit" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Controles</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                            <!-- Card 3 -->
+                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(3)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Warning" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Recaudos</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                            <!-- Card 4 -->
+                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(4)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Error" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.Album" Size="Size.Large" /> <!-- Icono para "Facturación" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Facturación</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+                        </div>
+                    </MudContainer>
+                </div>
+            </div>
+
+            <!-- Columnas para los formularios -->
+            <div class="col-lg-9">
+                <div class="card h-100">
+                    <div class="form-content">
+                        <!-- Formulario 1 -->
+                        @if (showForm1)
+                        {
+                            <div class="form-container">
+                                <h5>Form 1 Content</h5>
+                            </div>
+                        }
+
+                        <!-- Formulario 2 -->
+                        @if (showForm2)
+                        {
+                            <div class="form-container">
+                                <h5>Form 2 Content</h5>
+                            </div>
+                        }
+
+                        <!-- Formulario 3 -->
+                        @if (showForm3)
+                        {
+                            <div class="form-container">
+                                <h5>Form 3 Content</h5>
+                            </div>
+                        }
+
+                        <!-- Formulario 4 -->
+                        @if (showForm4)
+                        {
+                            <div class="form-container">
+                                <h5>Form 4 Content</h5>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+    }
+
+    .form-container {
+        padding: 1rem;
+        /* Add more styling as needed */
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+</style>

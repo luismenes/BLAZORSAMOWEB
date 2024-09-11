@@ -15,7 +15,9 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         [Parameter]
         public UrlParametersDTO urlParametersDTO { get; set; }
         [Parameter]
-        public EventCallback<ConvenioDTO> SetContinue { get; set; }
+        public EventCallback<ConvenioDTO> SetContinue { get; set; }  
+        [Parameter]
+        public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
         private List<ConveDto> listaConvenios = new List<ConveDto>();
         private ConvenioAdd convenioAdd;
 
@@ -30,6 +32,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private bool isNuevoDisabled = false;
         private bool isComponentConsulta = true;
         private bool isComponentAdd = false;
+        private bool isComponentConfig = false;
         private List<Dato> _tipoConvenios = new List<Dato>();
 
         protected override async Task OnInitializedAsync()
@@ -51,6 +54,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             isNuevoDisabled = true;
             isComponentConsulta = false;
             isComponentAdd = true;
+            isComponentConfig = false;
 
         }
 
@@ -74,6 +78,8 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             isNuevoDisabled = false;
             isComponentConsulta = true;
             isComponentAdd = false;
+            isComponentConfig = false;
+
         }
 
         private async Task Filtrar()
@@ -259,6 +265,33 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             await CargarDatos();
             _swaAlerts.ShowLoadingClose();
             StateHasChanged();
+        }
+
+        private async Task ConfigConvenioAsync(long id)
+        {
+
+            var resultado = await _ConveniosSAMService.EditarConvenio(id);
+            await SetContinueConfig.InvokeAsync(resultado);
+
+
+        }
+
+        public async Task ConfigConvenioRd(ConvenioDTO formCliente)
+        {
+            BtnConfigConvenio();
+            StateHasChanged(); 
+
+        }
+
+        public void BtnConfigConvenio()
+        {
+            isGuardarDisabled = false;
+            isAnularDisabled = false;
+            isNuevoDisabled = true;
+            isComponentConsulta = false;
+            isComponentAdd = false;
+            isComponentConfig = true;
+
         }
     }
 }

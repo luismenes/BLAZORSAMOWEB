@@ -31,13 +31,13 @@
                 <h4 class="card-title mb-0 flex-grow-1">
 
                     <MudItem xs="0">
-                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" Disabled="@isNuevoDisabled" @onclick="BtnNuevoClick" Title="Nuevo Registro">
+                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" Disabled="@isNuevoDisabled" @onclick="BtnNuevoClick" Data-toggle="tooltip" Title="Nuevo Registro">
                             <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
                         </MudButton>
-                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="@isGuardarDisabled" @onclick="BtnGuardarClick" Title="Guardar">
+                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Success" Class="mb-2" Icon="@Icons.Material.Filled.Save" Disabled="@isGuardarDisabled" @onclick="BtnGuardarClick" Data-toggle="tooltip" Title="Guardar">
                             <MudIcon Icon="@Icons.Filled.Save" Size="Size.Large" />
                         </MudButton>
-                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="@isAnularDisabled" @onclick="BtnAnularClick" Title="Anular Registro">
+                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="@isAnularDisabled" @onclick="BtnAnularClick" Data-toggle="tooltip" Title="Anular Registro">
                             <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
                         </MudButton>
                         @* <MudButton Variant="Radzen.Variant.Outlined" Color="Color.Primary" Class="mb-2" Icon="@Icons.Material.Filled.Search" @onclick="BtnBuscarClick" Title="Buscar Registro">
@@ -132,12 +132,21 @@ else if (isComponentConsulta)
                                         <MudTd>
                                             <button Class="btn btn-outline-info btn-icon waves-effect waves-light"
                                         @onclick="() => EditarConvenioAsync(entidad.Id)"
+                                        Data-toggle="tooltip"
                                         Title="Editar">
                                                 <i class="las la-user-alt"></i>
                                             </button>
 
+                                            <button Class="btn btn-outline-warning btn-icon waves-effect waves-light"
+                                        @onclick="() => ConfigConvenioAsync(entidad.Id)"
+                                        Data-toggle="tooltip"
+                                        Title="Configurar">
+                                                <i class="lab la-hubspot"></i>
+                                            </button>
+
                                             <button class="@entidad.EstadoColor"
                                         @onclick="() => CambiarEstado(entidad.Id)"
+                                        Data-toggle="tooltip"
                                         title="@entidad.EstadoTooltip">
                                                 <i class="@entidad.IconClass"></i>
                                             </button>
@@ -167,4 +176,10 @@ else if (isComponentConsulta)
     </div>
 
 }
+else if (isComponentConfig)
+{
+    <ConvenioConfig urlParametersDTO="@urlParametersDTO"></ConvenioConfig>
+}
+
+
 
