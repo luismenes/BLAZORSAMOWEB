@@ -154,7 +154,7 @@ namespace BlazorServer.Common.Helpers.SweetAlert
                 AllowOutsideClick = false,
                 Background = "rgba(0, 0, 0, 0)", // Configura el fondo transparente aquí
                 ImageHeight = 200,
-                ImageUrl = "css/Images/loading_.gif",
+                ImageUrl = "dist/Img/loadingSamo.gif",
             });
         }
 

@@ -15,7 +15,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         [Parameter]
         public UrlParametersDTO urlParametersDTO { get; set; }
         [Parameter]
-        public EventCallback<ConvenioDTO> SetContinue { get; set; }  
+        public EventCallback<ConvenioDTO> SetContinue { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
         private List<ConveDto> listaConvenios = new List<ConveDto>();
@@ -72,7 +72,11 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private void LimpiarFormulario()
         {
-            convenioAdd.LimpiarFormulario();
+            if (convenioAdd != null)
+            {
+
+                convenioAdd.LimpiarFormulario();
+            }
             isGuardarDisabled = true;
             isAnularDisabled = true;
             isNuevoDisabled = false;
@@ -145,7 +149,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private async Task OnNombreConvenioChanged(string newValue)
         {
             nombreConvenio = newValue;
-           await CargarDatos();
+            await CargarDatos();
         }
 
         public async Task EditarFormularioCliente(ConvenioDTO formCliente)
@@ -279,7 +283,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public async Task ConfigConvenioRd(ConvenioDTO formCliente)
         {
             BtnConfigConvenio();
-            StateHasChanged(); 
+            StateHasChanged();
 
         }
 

@@ -18,11 +18,11 @@
                     <MudContainer>
                         <div class="d-flex flex-column gap-2" style="max-width: 250px;">
                             <!-- Card 1 -->
-                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(1)">
+                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(1)">
                                 <MudCardContent>
                                     <div class="d-flex align-items-center gap-2">
                                         <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.Album" Size="Size.Large" /> <!-- Icono para "Sedes" -->
+                                            <MudIcon Icon="@Icons.Material.Rounded.ShareLocation" Size="Size.Large" /> <!-- Icono para "Sedes" -->
                                         </MudAvatar>
                                         <div>
                                             <h6 class="mb-1">Sedes</h6>
@@ -32,11 +32,11 @@
                             </MudCard>
 
                             <!-- Card 2 -->
-                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(2)">
+                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(2)">
                                 <MudCardContent>
                                     <div class="d-flex align-items-center gap-2">
                                         <MudAvatar Color="Color.Secondary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Custom.Brands.Reddit" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                                            <MudIcon Icon="@Icons.Material.Rounded.Diversity3" Size="Size.Large" /> <!-- Icono para "Controles" -->
                                         </MudAvatar>
                                         <div>
                                             <h6 class="mb-1">Controles</h6>
@@ -46,7 +46,7 @@
                             </MudCard>
 
                             <!-- Card 3 -->
-                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(3)">
+                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(3)">
                                 <MudCardContent>
                                     <div class="d-flex align-items-center gap-2">
                                         <MudAvatar Color="Color.Warning" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
@@ -60,14 +60,56 @@
                             </MudCard>
 
                             <!-- Card 4 -->
-                            <MudCard Class="custom-card" Style="width: 100%; cursor: pointer;" @onclick="() => ToggleForm(4)">
+                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(4)">
                                 <MudCardContent>
                                     <div class="d-flex align-items-center gap-2">
                                         <MudAvatar Color="Color.Error" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.Album" Size="Size.Large" /> <!-- Icono para "Facturación" -->
+                                            <MudIcon Icon="@Icons.Material.Rounded.BackupTable" Size="Size.Large" /> <!-- Icono para "Facturación" -->
                                         </MudAvatar>
                                         <div>
                                             <h6 class="mb-1">Facturación</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                            <!-- Card 5 -->
+                            <MudCard Class="custom-card" Style="width: 100%; background-color:#e4e5e5;cursor: pointer;" @onclick="() => ToggleForm(5)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Tertiary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.GpsFixed" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Cobertura</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                            <!-- Card 6 -->
+                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(6)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Surface" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.SensorOccupied" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Contactos</h6>
+                                        </div>
+                                    </div>
+                                </MudCardContent>
+                            </MudCard>
+
+                             <!-- Card 7 -->
+                            <MudCard Class="custom-card" Style="width: 100%; background-color:#7b9392; cursor: pointer;" @onclick="() => ToggleForm(7)">
+                                <MudCardContent>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <MudAvatar Color="Color.Info" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                            <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                        </MudAvatar>
+                                        <div>
+                                            <h6 class="mb-1">Centros de Costos</h6>
                                         </div>
                                     </div>
                                 </MudCardContent>
@@ -110,6 +152,30 @@
                         {
                             <div class="form-container">
                                 <h5>Form 4 Content</h5>
+                            </div>
+                        }
+
+                          <!-- Formulario 5 -->
+                        @if (showForm5)
+                        {
+                            <div class="form-container">
+                                <h5>Form 5 Content</h5>
+                            </div>
+                        }
+
+                        <!-- Formulario 6 -->
+                        @if (showForm6)
+                        {
+                            <div class="form-container">
+                                <h5>Form 6 Content</h5>
+                            </div>
+                        }
+
+                        <!-- Formulario 7 -->
+                        @if (showForm7)
+                        {
+                            <div class="form-container">
+                                <h5>Form 7 Content</h5>
                             </div>
                         }
                     </div>
