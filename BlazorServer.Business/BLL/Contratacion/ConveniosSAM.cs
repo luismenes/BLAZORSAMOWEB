@@ -224,5 +224,79 @@ namespace BlazorServer.Business.BLL.Contratacion
             }
         }
 
+        public async Task<IEnumerable<SedeConvenioDTO>> ObtenerSedes(long? convenioId)
+        {
+            using (SamoContext db = new SamoContext())
+            {
+                // Primero, obtenemos todas las sedes activas
+                var sedes = await db.Sedes.Where(s => s.Activo).ToListAsync();
+
+                // Si se proporciona un convenioId, obtenemos la configuración de convenio
+                var convenioSedes = convenioId.HasValue
+                    ? await db.ConvenioSedes.Where(cs => cs.ConvenioId == convenioId.Value).ToListAsync()
+                    : new List<ConvenioSede>();
+
+                // Ahora combinamos las sedes con la configuración de convenio
+                var result = from sede in sedes
+                             join convenioSede in convenioSedes
+                             on sede.Id equals convenioSede.SedeId into sedesConfig
+                             from convenioSede in sedesConfig.DefaultIfEmpty() // LEFT JOIN
+                             select new SedeConvenioDTO
+                             {
+                                 SedeId = sede.Id,
+                                 NombreSede = sede.EsSede ? "Principal: " + sede.Nombre : sede.Nombre,
+                                 Activo = convenioSede != null ? convenioSede.Activo : false, // Si no hay ConvenioSede, lo marcamos como inactivo
+                                 EstadoClass = convenioSede != null && convenioSede.Activo == true
+                                     ? "alert alert-success my-auto text-uppercase"
+                                     : "alert alert-danger my-auto text-uppercase",
+                                 EstadoTooltip = convenioSede != null && convenioSede.Activo == true
+                                     ? "Inactivar"
+                                     : "Activar",
+                                 EstadoColor = convenioSede != null && convenioSede.Activo == true
+                                     ? "btn btn-outline-danger btn-icon waves-effect waves-light"
+                                     : "btn btn-outline-success btn-icon waves-effect waves-light",
+                                 IconClass = convenioSede != null && !convenioSede.Activo == true
+                                     ? "las la-check-circle"
+                                     : "las la-exclamation-circle",
+                             };
+
+                return result.ToList(); // Aquí simplemente usamos ToList()
+            }
+        }
+
+        public async Task<bool> ActivarSede(long convenioId, long sedeId, long usuarioId)
+        {
+            using (SamoContext db = new SamoContext())
+            {
+                var convenioSede = await db.ConvenioSedes
+                                           .FirstOrDefaultAsync(cs => cs.ConvenioId == convenioId && cs.SedeId == sedeId);
+
+                if (convenioSede != null)
+                {
+                    convenioSede.Activo = !convenioSede.Activo;
+                    convenioSede.UsuarioId = usuarioId;
+                    convenioSede.FechaModificacion = DateTime.Now;
+                    db.ConvenioSedes.Update(convenioSede);
+                }
+                else
+                {
+                    var nuevaConvenioSede = new ConvenioSede
+                    {
+                        ConvenioId = convenioId,
+                        SedeId = sedeId,
+                        Activo = true,
+                        UsuarioId = usuarioId,
+                        FechaCreacion = DateTime.Now,
+                    };
+                    await db.ConvenioSedes.AddAsync(nuevaConvenioSede);
+                };
+
+                // Guardar cambios en la base de datos
+                await db.SaveChangesAsync();
+                return convenioSede?.Activo ?? true;
+            }
+        }
     }
+
 }
+

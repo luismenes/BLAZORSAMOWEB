@@ -200,7 +200,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             {
                 expandPanel = false;
             }
-            ConvenioModel.NombreEntidad = string.Empty;
+            ConvenioModel.NombreEntidad = null;
             ConvenioModel.ClaseId = selectedId;
             _swaAlerts.ShowLoadingClose();
             StateHasChanged();

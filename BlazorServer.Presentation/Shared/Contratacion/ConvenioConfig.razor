@@ -1,4 +1,8 @@
-﻿<div class="col-lg-12">
+﻿@inject IConveniosSAM _ConveniosSAMService
+@inject IJSRuntime JSRuntime
+@inject GlobalStateService AuthorizationService
+
+<div class="col-lg-12">
     <div class="card">
         <div class="card outline-badge-primary">
             <div class="card-content">
@@ -101,7 +105,7 @@
                                 </MudCardContent>
                             </MudCard>
 
-                             <!-- Card 7 -->
+                            <!-- Card 7 -->
                             <MudCard Class="custom-card" Style="width: 100%; background-color:#7b9392; cursor: pointer;" @onclick="() => ToggleForm(7)">
                                 <MudCardContent>
                                     <div class="d-flex align-items-center gap-2">
@@ -126,8 +130,61 @@
                         <!-- Formulario 1 -->
                         @if (showForm1)
                         {
-                            <div class="form-container">
-                                <h5>Form 1 Content</h5>
+                            <div class="card">
+                                <div class="card-body p-0">
+                                    <div class="alert alert-warning border-0 rounded-0 m-0 d-flex align-items-center" role="alert">
+                                        <div class="flex-grow-1 text-truncate">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.ShareLocation" Size="Size.Large" /> <!-- Icono para "Sedes" -->
+                                                </MudAvatar>
+                                                <div>
+                                                    <h6 class="mb-1">Sedes</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row align-items-end">
+                                        <div class="form-container">
+                                            <div class="card-body">
+                                                <div class="table-responsive">
+                                                    <table class="table table-hover w-100 dataTable small">
+                                                        <thead class="thead-light outline-badge-primary">
+                                                            <tr>
+                                                                <MudTh>Sede</MudTh>
+                                                                <MudTh>Estado</MudTh>
+                                                                <MudTh>Acciones</MudTh>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="list form-check-all">
+                                                            @foreach (var entidad in listaSedeConvenioDTO)
+                                                            {
+                                                                <MudTr>
+
+                                                                    <MudTd>@entidad.NombreSede</MudTd>
+                                                                    <MudTd Align="Center">
+                                                                        <span class="@entidad.EstadoClass">@GetEstado((bool)entidad.Activo)</span>
+                                                                    </MudTd>
+                                                                    <MudTd>
+                                                                        <button class="@entidad.EstadoColor"
+                                                                        @onclick="() => CambiarEstado(entidad.SedeId)"
+                                                                        title="@entidad.EstadoTooltip">
+                                                                            <i class="@entidad.IconClass"></i>
+                                                                        </button>
+                                                                    </MudTd>
+
+                                                                </MudTr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> <!-- end card-body-->
                             </div>
                         }
 
@@ -155,7 +212,7 @@
                             </div>
                         }
 
-                          <!-- Formulario 5 -->
+                        <!-- Formulario 5 -->
                         @if (showForm5)
                         {
                             <div class="form-container">

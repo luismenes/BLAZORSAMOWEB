@@ -18,6 +18,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
         private List<ConveDto> listaConvenios = new List<ConveDto>();
         private ConvenioAdd convenioAdd;
+        ConvenioConfig convenioConfig;
 
         private string nombreConvenio;
         private long tipoConvenio;
@@ -281,6 +282,10 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public async Task ConfigConvenioRd(ConvenioDTO formCliente)
         {
             BtnConfigConvenio();
+            StateHasChanged();
+
+            convenioConfig.ConvenioModel = formCliente;
+
             StateHasChanged();
 
         }

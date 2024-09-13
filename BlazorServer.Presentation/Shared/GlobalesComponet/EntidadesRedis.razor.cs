@@ -11,8 +11,7 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
         [Parameter]
         public EventCallback<EntidadIdDTO> SetContinue { get; set; }
 
-        [Parameter]
-        public UrlParametersDTO urlParametersDTO { get; set; }
+       
         private List<EntidadDto> listaEntidades = new List<EntidadDto>();
         private string NombreDocumento { get; set; }
         private string NombreEntidad { get; set; }
@@ -66,8 +65,8 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
 
             // Realiza la consulta según si hay o no ClassId
             var resultado = ClassId == null
-                ? await EntidadService.ObtenerEntidades(identificacion, documentoIdentidadID, paginaActual, tamañoPagina, Convert.ToInt64(urlParametersDTO.KeySession))
-                : await EntidadService.ObtenerEntidades(identificacion, documentoIdentidadID, paginaActual, tamañoPagina, Convert.ToInt64(urlParametersDTO.KeySession), ClassId);
+                ? await EntidadService.ObtenerEntidades(identificacion, documentoIdentidadID, paginaActual, tamañoPagina, Convert.ToInt64(AuthorizationService.UrlParametersDTO.KeySession))
+                : await EntidadService.ObtenerEntidades(identificacion, documentoIdentidadID, paginaActual, tamañoPagina, Convert.ToInt64(AuthorizationService.UrlParametersDTO.KeySession), ClassId);
 
             // Actualiza las listas y el estado de la interfaz
             listaEntidades = resultado.Elementos;

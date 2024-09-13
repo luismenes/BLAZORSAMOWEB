@@ -35,6 +35,8 @@ public partial class Sede
 
     public virtual ICollection<AmbitoSede> AmbitoSedes { get; set; } = new List<AmbitoSede>();
 
+    public virtual ICollection<ConvenioSede> ConvenioSedes { get; set; } = new List<ConvenioSede>();
+
     public virtual ICollection<Ip> Ips { get; set; } = new List<Ip>();
 
     public virtual ICollection<NivelSede> NivelSedes { get; set; } = new List<NivelSede>();

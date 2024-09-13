@@ -33,6 +33,8 @@ public partial class SamoContext : DbContext
 
     public virtual DbSet<Convenio> Convenios { get; set; }
 
+    public virtual DbSet<ConvenioSede> ConvenioSedes { get; set; }
+
     public virtual DbSet<Dato> Datos { get; set; }
 
     public virtual DbSet<Departamento> Departamentos { get; set; }
@@ -324,6 +326,22 @@ public partial class SamoContext : DbContext
             entity.HasOne(d => d.Usuario).WithMany(p => p.ConvenioUsuarios)
                 .HasForeignKey(d => d.UsuarioId)
                 .HasConstraintName("FK_Convenio_User");
+        });
+
+        modelBuilder.Entity<ConvenioSede>(entity =>
+        {
+            entity.ToTable("ConvenioSede", "Configuracion");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+            entity.Property(e => e.FechaModificacion).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Convenio).WithMany(p => p.ConvenioSedes)
+                .HasForeignKey(d => d.ConvenioId)
+                .HasConstraintName("FK_ConvenioSede_Dato");
+
+            entity.HasOne(d => d.Sede).WithMany(p => p.ConvenioSedes)
+                .HasForeignKey(d => d.SedeId)
+                .HasConstraintName("FK_ConvenioSede_Sede");
         });
 
         modelBuilder.Entity<Dato>(entity =>

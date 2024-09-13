@@ -1,4 +1,5 @@
-﻿using BlazorServer.DTO.Request.Contratacion;
+﻿using BlazorServer.DataAccess.Models;
+using BlazorServer.DTO.Request.Contratacion;
 using BlazorServer.DTO.Response.Constant;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace BlazorServer.Business.Interfaces.Contratacion
         Task<bool> UpdateManagement(ConvenioDTO Register);
         Task<ConvenioDTO> EditarConvenio(long id);
         Task<bool> CambiarEstadoConvenio(long id, long usuarioId);
+        Task<IEnumerable<SedeConvenioDTO>> ObtenerSedes(long? convenioId);
 
+        Task<bool> ActivarSede(long convenioId, long sedeId, long usuarioId);
     }
 }
