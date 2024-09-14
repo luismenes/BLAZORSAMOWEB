@@ -54,9 +54,15 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
                 if (resultado)
                 {
-                    // Mostrar un mensaje de éxito
+                    ToastService.ShowSuccess("Sede configurada!");
 
                 }
+                else
+                {
+                    ToastService.ShowError("Sede desactivada!");
+
+                }
+                StateHasChanged();
                 await CargarDatosSedesConvenio(ConvenioModel.Id);
             }
         }

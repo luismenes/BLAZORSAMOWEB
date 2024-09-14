@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using BlazorServer.Business;
 using BlazorServer.Common.Helpers.SweetAlert;
 using BlazorServer.Presentation.Modules.AutoMapper;
@@ -17,6 +18,7 @@ builder.Services.AddControllers();
 builder.Services.AddMudBlazorDialog();
 builder.Services.AddMudServices();
 builder.Services.AddSweetAlert2();
+builder.Services.AddBlazoredToast();
 
 builder.Services.AddScoped<SwaAlerts>();
 var app = builder.Build();

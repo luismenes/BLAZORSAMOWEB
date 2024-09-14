@@ -1,11 +1,14 @@
-﻿
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 @inject GlobalStateService AuthorizationService
 @inject NavigationManager Navigation
+
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
+<BlazoredToasts Position="Blazored.Toast.Configuration.ToastPosition.TopRight"/>
+
+
 <HeadContent>
     <title> SAMO | Sistema Atencion Medica operacional </title>
     <link rel="icon" href="~/Plantilla/assets/images/logo-sm.png" type="image/x-icon" />
