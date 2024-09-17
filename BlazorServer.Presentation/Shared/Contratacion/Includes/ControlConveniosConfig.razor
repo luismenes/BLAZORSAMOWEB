@@ -23,34 +23,41 @@
                         <ChildContent>
                             <br>
                             <MudGrid>
-                                <MudItem xs="5">
+                                <MudItem xs="12">
                                     <!-- Inner Vertical Card Menu -->
-                                    <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(1)">
-                                        <MudCardContent>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                                    <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
-                                                </MudAvatar>
-                                                <div>
-                                                    <h6 class="mb-1">Procedimiento</h6>
-                                                </div>
-                                            </div>
-                                        </MudCardContent>
-                                    </MudCard>
-                                    <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(2)">
-                                        <MudCardContent>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                                    <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
-                                                </MudAvatar>
-                                                <div>
-                                                    <h6 class="mb-1">Artículo</h6>
-                                                </div>
-                                            </div>
-                                        </MudCardContent>
-                                    </MudCard>
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(1)">
+                                                <MudCardContent>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                            <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
+                                                        </MudAvatar>
+                                                        <div>
+                                                            <h6 class="mb-1">Procedimiento</h6>
+                                                        </div>
+                                                    </div>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(2)">
+                                                <MudCardContent>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                            <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
+                                                        </MudAvatar>
+                                                        <div>
+                                                            <h6 class="mb-1">Artículo</h6>
+                                                        </div>
+                                                    </div>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                        <!-- Add more MudItem elements here for additional cards -->
+                                    </MudGrid>
                                 </MudItem>
-                                <MudItem xs="7">
+                                <MudItem xs="12">
                                     @if (innerTabFrecuenciaOption == 1)
                                     {
                                         <div class="row">
@@ -72,6 +79,24 @@
                                             </div>
                                         </div>
 
+                                        <div class="col-lg-12">
+                                            <MudCard>
+                                                <div class="card">
+                                                    <div class="card-body align-items-center d-flex">
+                                                        <h4 class="card-title mb-0 flex-grow-1">
+                                                            <MudItem xs="0">
+                                                                <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" Disabled="@isNuevoDisabledProceFrecuencia" @onclick="BtnProceFrecuenciaNuevoClick" Title="Nuevo Registro">
+                                                                    <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
+                                                                </MudButton>
+                                                                <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="@isAnularDisabledProceFrecuencia" @onclick="BtnProceFrecuenciaAnularClick" Title="Anular Registro">
+                                                                    <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
+                                                                </MudButton>
+                                                            </MudItem>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            </MudCard>
+                                        </div>
                                     }
                                     else if (innerTabFrecuenciaOption == 2)
                                     {
@@ -93,7 +118,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     }
                                 </MudItem>
                             </MudGrid>
@@ -103,34 +127,41 @@
                         <ChildContent>
                             <br>
                             <MudGrid>
-                                <MudItem xs="5">
+                                <MudItem xs="12">
                                     <!-- Inner Vertical Card Menu -->
-                                    <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(1)">
-                                        <MudCardContent>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                                    <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
-                                                </MudAvatar>
-                                                <div>
-                                                    <h6 class="mb-1">Procedimiento</h6>
-                                                </div>
-                                            </div>
-                                        </MudCardContent>
-                                    </MudCard>
-                                    <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(2)">
-                                        <MudCardContent>
-                                            <div class="d-flex align-items-center gap-2">
-                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                                    <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
-                                                </MudAvatar>
-                                                <div>
-                                                    <h6 class="mb-1">Artículo</h6>
-                                                </div>
-                                            </div>
-                                        </MudCardContent>
-                                    </MudCard>
+                                    <MudGrid>
+                                        <MudItem xs="6">
+                                            <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(1)">
+                                                <MudCardContent>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                            <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
+                                                        </MudAvatar>
+                                                        <div>
+                                                            <h6 class="mb-1">Procedimiento</h6>
+                                                        </div>
+                                                    </div>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                        <MudItem xs="6">
+                                            <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(2)">
+                                                <MudCardContent>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                            <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
+                                                        </MudAvatar>
+                                                        <div>
+                                                            <h6 class="mb-1">Artículo</h6>
+                                                        </div>
+                                                    </div>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </MudItem>
+                                        <!-- Add more MudItem elements here for additional cards -->
+                                    </MudGrid>
                                 </MudItem>
-                                <MudItem xs="7">
+                                <MudItem xs="12">
                                     @if (innerTabAutorizacionesOption == 1)
                                     {
                                         <div class="row">
@@ -151,7 +182,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     }
                                     else if (innerTabAutorizacionesOption == 2)
                                     {
@@ -173,7 +203,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     }
                                 </MudItem>
                             </MudGrid>
@@ -190,7 +219,8 @@
     private int selectedTab = 0;
     private int innerTabFrecuenciaOption = 1; // Default to "Procedimiento" for "Frecuencia"
     private int innerTabAutorizacionesOption = 1; // Default to "Procedimiento" for "Autorizaciones"
-
+    private bool isAnularDisabledProceFrecuencia = true;
+    private bool isNuevoDisabledProceFrecuencia = false;
     private async Task SaveSelectedTab(int index)
     {
         // Save the selected tab index to local storage
@@ -205,5 +235,29 @@
     private void SetInnerTabAutorizaciones(int tab)
     {
         innerTabAutorizacionesOption = tab;
+    }
+
+    public void BtnProceFrecuenciaNuevoClick()
+    {
+        isAnularDisabledProceFrecuencia = false;
+        isNuevoDisabledProceFrecuencia = true;
+
+
+    }
+
+
+
+    private void BtnProceFrecuenciaAnularClick()
+    {
+        LimpiarFormulario();
+    }
+
+    private void LimpiarFormulario()
+    {
+
+        isAnularDisabledProceFrecuencia = true;
+        isNuevoDisabledProceFrecuencia = false;
+
+
     }
 }
