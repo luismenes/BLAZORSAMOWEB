@@ -19,8 +19,12 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private bool showForm5 = false;
         private bool showForm6 = false;
         private bool showForm7 = false;
-        private List<SedeConvenioDTO> listaSedeConvenioDTO = new List<SedeConvenioDTO>();
+        private IEnumerable<SedeConvenioDTO> listaSedeConvenioDTO = new List<SedeConvenioDTO>();
         public ConvenioDTO ConvenioModel = new ConvenioDTO();
+        private string searchString = "";
+        private SedeConvenioDTO selectedItem = null;
+        private bool dense = true;
+
         private async Task ToggleForm(int formNumber)
         {
             showForm1 = formNumber == 1;
@@ -40,7 +44,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private string GetEstado(bool activo)
         {
-            return activo ? "Configurada" : "No Configurada";
+            return activo ? "✔️" : "🛑";
         }
 
         private async Task CambiarEstado(long id)
@@ -50,7 +54,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             if (confirmacion)
             {
 
-                bool resultado = await _ConveniosSAMService.ActivarSede(ConvenioModel.Id, id ,Convert.ToInt64(AuthorizationService.UrlParametersDTO.UserId));
+                bool resultado = await _ConveniosSAMService.ActivarSede(ConvenioModel.Id, id, Convert.ToInt64(AuthorizationService.UrlParametersDTO.UserId));
 
                 if (resultado)
                 {
@@ -92,5 +96,25 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
             return result; // Devuelve true si el usuario confirma la acción
         }
+
+        private bool FilterFunc(SedeConvenioDTO entidad)
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+
+            if (entidad.NombreSede.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            string estado = GetEstado((bool)entidad.Activo);
+            if (estado.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            if (entidad.SedeId.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            return false;
+        }
+
+
     }
 }

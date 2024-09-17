@@ -124,7 +124,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         private string GetEstado(bool activo)
         {
-            return activo ? "Activo" : "Inactivo";
+            return activo ? "✔️" : "🛑";
         }
 
         private async Task CambiarEstado(long id)

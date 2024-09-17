@@ -151,35 +151,35 @@
                                         <div class="form-container">
                                             <div class="card-body">
                                                 <div class="table-responsive">
-                                                    <table class="table table-hover w-100 dataTable small">
-                                                        <thead class="thead-light outline-badge-primary">
-                                                            <tr>
-                                                                <MudTh>Sede</MudTh>
-                                                                <MudTh>Estado</MudTh>
-                                                                <MudTh>Acciones</MudTh>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody class="list form-check-all">
-                                                            @foreach (var entidad in listaSedeConvenioDTO)
-                                                            {
-                                                                <MudTr>
 
-                                                                    <MudTd>@entidad.NombreSede</MudTd>
-                                                                    <MudTd Align="Center">
-                                                                        <span class="@entidad.EstadoClass">@GetEstado((bool)entidad.Activo)</span>
-                                                                    </MudTd>
-                                                                    <MudTd>
-                                                                        <button class="@entidad.EstadoColor"
-                                                                        @onclick="() => CambiarEstado(entidad.SedeId)"
-                                                                        title="@entidad.EstadoTooltip">
-                                                                            <i class="@entidad.IconClass"></i>
-                                                                        </button>
-                                                                    </MudTd>
+                                                    <MudTable Items="@listaSedeConvenioDTO" Dense="@dense" Filter="FilterFunc" @bind-SelectedItem="selectedItem">
+                                                        <ToolBarContent>
+                                                            <MudSpacer />
+                                                            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                                        </ToolBarContent>
+                                                        <HeaderContent >
+                                                            <MudTh >Nombre Sede</MudTh>
+                                                            <MudTh>Estado</MudTh>
+                                                            <MudTh>Acciones</MudTh>
+                                                        </HeaderContent>
+                                                        <RowTemplate>
+                                                            <MudTd>@context.NombreSede</MudTd>
+                                                            <MudTd Align="Center">
+                                                                <span class="@context.EstadoClass">@GetEstado((bool)context.Activo)</span>
+                                                            </MudTd>
+                                                            <MudTd>
+                                                                <button class="@context.EstadoColor"
+                                                                    @onclick="() => CambiarEstado(context.SedeId)"
+                                                                    title="@context.EstadoTooltip">
+                                                                    <i class="@context.IconClass"></i>
+                                                                </button>
+                                                            </MudTd>
+                                                        </RowTemplate>
+                                                        <PagerContent>
+                                                            <MudTablePager />
+                                                        </PagerContent>
+                                                    </MudTable>
 
-                                                                </MudTr>
-                                                            }
-                                                        </tbody>
-                                                    </table>
                                                 </div>
 
                                             </div>

@@ -582,3 +582,10 @@ footer .gov-co-link-presentacion {
     letter-spacing: inherit;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+.custom-header {
+    background-color: #f0f0f0; /* Example background color */
+    color: #007bff; /* Example text color */
+    font-weight: bold; /* Example font weight */
+    text-align: center; /* Example text alignment */
+}
