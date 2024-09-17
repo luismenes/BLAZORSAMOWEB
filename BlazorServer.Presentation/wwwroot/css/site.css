@@ -589,3 +589,10 @@ footer .gov-co-link-presentacion {
     font-weight: bold; /* Example font weight */
     text-align: center; /* Example text alignment */
 }
+
+.name-column {
+    max-width: 300px; /* Ajusta el ancho máximo de la columna */
+    overflow: hidden; /* Oculta el desbordamiento */
+    word-wrap: break-word; /* Ajusta el texto y lo divide en múltiples líneas si es necesario */
+    white-space: normal; /* Permite que el texto haga saltos de línea */
+}
