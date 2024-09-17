@@ -71,6 +71,8 @@ public partial class Procedimiento
 
     public virtual Dato? Concepto { get; set; }
 
+    public virtual ICollection<ConvenioControlProcedimiento> ConvenioControlProcedimientos { get; set; } = new List<ConvenioControlProcedimiento>();
+
     public virtual Dato? Edad { get; set; }
 
     public virtual ICollection<EspecialidadProcedimiento> EspecialidadProcedimientos { get; set; } = new List<EspecialidadProcedimiento>();

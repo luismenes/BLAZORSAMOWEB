@@ -24,6 +24,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private string searchString = "";
         private SedeConvenioDTO selectedItem = null;
         private bool dense = true;
+      
 
         private async Task ToggleForm(int formNumber)
         {
@@ -115,6 +116,6 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             return false;
         }
 
-
+        
     }
 }

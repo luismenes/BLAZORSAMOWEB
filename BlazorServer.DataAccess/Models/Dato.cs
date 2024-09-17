@@ -33,6 +33,8 @@ public partial class Dato
 
     public virtual ICollection<Convenio> ConvenioClases { get; set; } = new List<Convenio>();
 
+    public virtual ICollection<ConvenioControlProcedimiento> ConvenioControlProcedimientos { get; set; } = new List<ConvenioControlProcedimiento>();
+
     public virtual ICollection<Convenio> ConvenioOrigenConvenios { get; set; } = new List<Convenio>();
 
     public virtual ICollection<ConvenioSede> ConvenioSedes { get; set; } = new List<ConvenioSede>();

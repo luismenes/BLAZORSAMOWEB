@@ -33,6 +33,8 @@ public partial class SamoContext : DbContext
 
     public virtual DbSet<Convenio> Convenios { get; set; }
 
+    public virtual DbSet<ConvenioControlProcedimiento> ConvenioControlProcedimientos { get; set; }
+
     public virtual DbSet<ConvenioSede> ConvenioSedes { get; set; }
 
     public virtual DbSet<Dato> Datos { get; set; }
@@ -107,6 +109,7 @@ public partial class SamoContext : DbContext
     .AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DBConectionString"));
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Acceso>(entity =>
@@ -326,6 +329,28 @@ public partial class SamoContext : DbContext
             entity.HasOne(d => d.Usuario).WithMany(p => p.ConvenioUsuarios)
                 .HasForeignKey(d => d.UsuarioId)
                 .HasConstraintName("FK_Convenio_User");
+        });
+
+        modelBuilder.Entity<ConvenioControlProcedimiento>(entity =>
+        {
+            entity.ToTable("ConvenioControlProcedimiento", "Configuracion");
+
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Convenio).WithMany(p => p.ConvenioControlProcedimientos)
+                .HasForeignKey(d => d.ConvenioId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ConvenioControlProcedimiento_Convenio");
+
+            entity.HasOne(d => d.Procedimiento).WithMany(p => p.ConvenioControlProcedimientos)
+                .HasForeignKey(d => d.ProcedimientoId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ConvenioControlProcedimiento_Procedimiento");
+
+            entity.HasOne(d => d.TipoControl).WithMany(p => p.ConvenioControlProcedimientos)
+                .HasForeignKey(d => d.TipoControlId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ConvenioControlProcedimiento_Dato");
         });
 
         modelBuilder.Entity<ConvenioSede>(entity =>

@@ -1,0 +1,209 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="alert alert-warning border-0 rounded-0 m-0 d-flex align-items-center" role="alert">
+            <div class="flex-grow-1 text-truncate">
+                <div class="d-flex align-items-center gap-2">
+                    <MudAvatar Color="Color.Secondary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                        <MudIcon Icon="@Icons.Material.Rounded.Diversity3" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                    </MudAvatar>
+                    <div>
+                        <h6 class="mb-1">Controles</h6>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row align-items-end">
+            <MudCardHeader>
+                <!-- Outer Tabs -->
+                <MudTabs @bind-ActivePanelIndex="selectedTab" OnPanelIndexChanged="SaveSelectedTab">
+                    <MudTabPanel Text="Frecuencia">
+                        <ChildContent>
+                            <br>
+                            <MudGrid>
+                                <MudItem xs="5">
+                                    <!-- Inner Vertical Card Menu -->
+                                    <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(1)">
+                                        <MudCardContent>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
+                                                </MudAvatar>
+                                                <div>
+                                                    <h6 class="mb-1">Procedimiento</h6>
+                                                </div>
+                                            </div>
+                                        </MudCardContent>
+                                    </MudCard>
+                                    <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabFrecuencia(2)">
+                                        <MudCardContent>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
+                                                </MudAvatar>
+                                                <div>
+                                                    <h6 class="mb-1">Artículo</h6>
+                                                </div>
+                                            </div>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="7">
+                                    @if (innerTabFrecuenciaOption == 1)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <h4 class="mb-sm-0 btn-outline-primary">Gestión Frecuencia</h4>
+                                                        </ol>
+                                                    </div>
+
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <li class="breadcrumb-item"><a>Consulta Procedimiento</a></li>
+                                                            <li class="breadcrumb-item active">Procedimiento/Frecuencia</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (innerTabFrecuenciaOption == 2)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <h4 class="mb-sm-0 btn-outline-primary">Gestión Frecuencia</h4>
+                                                        </ol>
+                                                    </div>
+
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <li class="breadcrumb-item"><a>Consulta Artículo</a></li>
+                                                            <li class="breadcrumb-item active">Artículo/Frecuencia</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudTabPanel>
+                    <MudTabPanel Text="Autorizaciones">
+                        <ChildContent>
+                            <br>
+                            <MudGrid>
+                                <MudItem xs="5">
+                                    <!-- Inner Vertical Card Menu -->
+                                    <MudCard Class="custom-card" Style="background-color:lightskyblue; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(1)">
+                                        <MudCardContent>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.DocumentScanner" Size="Size.Large" />
+                                                </MudAvatar>
+                                                <div>
+                                                    <h6 class="mb-1">Procedimiento</h6>
+                                                </div>
+                                            </div>
+                                        </MudCardContent>
+                                    </MudCard>
+                                    <MudCard Class="custom-card" Style="background-color:lemonchiffon; cursor: pointer;" @onclick="() => SetInnerTabAutorizaciones(2)">
+                                        <MudCardContent>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                    <MudIcon Icon="@Icons.Material.Rounded.Article" Size="Size.Large" />
+                                                </MudAvatar>
+                                                <div>
+                                                    <h6 class="mb-1">Artículo</h6>
+                                                </div>
+                                            </div>
+                                        </MudCardContent>
+                                    </MudCard>
+                                </MudItem>
+                                <MudItem xs="7">
+                                    @if (innerTabAutorizacionesOption == 1)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <h4 class="mb-sm-0 btn-outline-primary">Gestión Autorizaciones</h4>
+                                                        </ol>
+                                                    </div>
+
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <li class="breadcrumb-item"><a>Consulta Procedimiento</a></li>
+                                                            <li class="breadcrumb-item active">Procedimiento/Autorizaciones</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                    else if (innerTabAutorizacionesOption == 2)
+                                    {
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <h4 class="mb-sm-0 btn-outline-primary">Gestión Autorizaciones</h4>
+                                                        </ol>
+                                                    </div>
+
+                                                    <div class="page-title-right">
+                                                        <ol class="breadcrumb m-0">
+                                                            <li class="breadcrumb-item"><a>Consulta Artículo</a></li>
+                                                            <li class="breadcrumb-item active">Artículo/Autorizaciones</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                </MudItem>
+                            </MudGrid>
+                        </ChildContent>
+                    </MudTabPanel>
+                </MudTabs>
+            </MudCardHeader>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private int selectedTab = 0;
+    private int innerTabFrecuenciaOption = 1; // Default to "Procedimiento" for "Frecuencia"
+    private int innerTabAutorizacionesOption = 1; // Default to "Procedimiento" for "Autorizaciones"
+
+    private async Task SaveSelectedTab(int index)
+    {
+        // Save the selected tab index to local storage
+        await JSRuntime.InvokeVoidAsync("localStorage.setItem", "selectedTab", index.ToString());
+    }
+
+    private void SetInnerTabFrecuencia(int tab)
+    {
+        innerTabFrecuenciaOption = tab;
+    }
+
+    private void SetInnerTabAutorizaciones(int tab)
+    {
+        innerTabAutorizacionesOption = tab;
+    }
+}

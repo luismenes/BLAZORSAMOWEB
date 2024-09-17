@@ -1,4 +1,5 @@
-﻿@inject IConveniosSAM _ConveniosSAMService
+﻿@using BlazorServer.Presentation.Shared.Contratacion.Includes
+@inject IConveniosSAM _ConveniosSAMService
 @inject IJSRuntime JSRuntime
 @inject GlobalStateService AuthorizationService
 @inject IToastService ToastService
@@ -157,8 +158,8 @@
                                                             <MudSpacer />
                                                             <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                                                         </ToolBarContent>
-                                                        <HeaderContent >
-                                                            <MudTh >Nombre Sede</MudTh>
+                                                        <HeaderContent>
+                                                            <MudTh>Nombre Sede</MudTh>
                                                             <MudTh>Estado</MudTh>
                                                             <MudTh>Acciones</MudTh>
                                                         </HeaderContent>
@@ -192,9 +193,7 @@
                         <!-- Formulario 2 -->
                         @if (showForm2)
                         {
-                            <div class="form-container">
-                                <h5>Form 2 Content</h5>
-                            </div>
+                           <ControlConveniosConfig></ControlConveniosConfig>
                         }
 
                         <!-- Formulario 3 -->

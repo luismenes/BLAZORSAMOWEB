@@ -55,6 +55,8 @@ public partial class Convenio
 
     public virtual Dato? Clase { get; set; }
 
+    public virtual ICollection<ConvenioControlProcedimiento> ConvenioControlProcedimientos { get; set; } = new List<ConvenioControlProcedimiento>();
+
     public virtual Entidad? Entidad { get; set; }
 
     public virtual Operacion? Operacion { get; set; }
