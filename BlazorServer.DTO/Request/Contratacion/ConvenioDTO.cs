@@ -52,6 +52,8 @@ namespace BlazorServer.DTO.Request.Contratacion
 
         public long? OperacionId { get; set; }
         public bool Estado { get; set; }
+        public long? ProcedimientoId { get; set; }
+        public long TipoControl { get; set; }
 
     }
 }

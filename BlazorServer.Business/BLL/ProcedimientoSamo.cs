@@ -58,5 +58,25 @@ namespace BlazorServer.Business.BLL
             }
         }
 
+        public async Task<ProcedimientoDto> ObtenerProcedimeinto(long procedimeintoID)
+        {
+
+            using (SamoContext db = new SamoContext())
+            {
+                var procedimiento = await db.Procedimientos
+                     .Where(x => x.Id == procedimeintoID && x.Activo == true)
+                     .FirstOrDefaultAsync();
+
+                // Si el procedimiento no se encuentra, retorna null
+                if (procedimiento == null)
+                    return null;
+
+                // Mapeo manual de la entidad Procedimiento a ProcedimientoDto
+                return new ProcedimientoDto
+                {
+                    Id = procedimiento.Id,
+                };
+            }
+        }
     }
 }

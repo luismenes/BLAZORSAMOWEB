@@ -327,6 +327,39 @@ namespace BlazorServer.Business.BLL.Contratacion
                 return result.ToList(); // Aquí simplemente usamos ToList()
             }
         }
+
+        public async Task<bool> ActivarProcedimiento(long convenioId, long tipo, long procedimientoId)
+        {
+            using (SamoContext db = new SamoContext())
+            {
+                var Obj = await db.ConvenioControlProcedimientos
+                                           .FirstOrDefaultAsync(cs => cs.ConvenioId == convenioId && cs.ProcedimientoId == procedimientoId && cs.TipoControlId == tipo);
+
+                if (Obj != null)
+                {
+                    Obj.Activo = !Obj.Activo;
+                    Obj.FechaCreacion = DateTime.Now;
+                    db.ConvenioControlProcedimientos.Update(Obj);
+                }
+                else
+                {
+                    var newObj = new ConvenioControlProcedimiento
+                    {
+                        ConvenioId = convenioId,
+                        ProcedimientoId = procedimientoId,
+                        Activo = true,
+                        TipoControlId = tipo,
+                        FechaCreacion = DateTime.Now,
+                    };
+                    await db.ConvenioControlProcedimientos.AddAsync(newObj);
+                };
+
+                // Guardar cambios en la base de datos
+                await db.SaveChangesAsync();
+                return Obj?.Activo ?? true;
+            }
+
+        }
     }
 
 }

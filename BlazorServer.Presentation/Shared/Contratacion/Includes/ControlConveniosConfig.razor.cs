@@ -1,5 +1,6 @@
 ﻿using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
+using BlazorServer.Presentation.Shared.GlobalesComponet;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using static BlazorServer.Business.BLL.ProcedimientoSamo;
@@ -10,6 +11,8 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
     {
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueControlConveniosConfig { get; set; }
+        [Parameter]
+        public ConvenioDTO Model { get; set; }
 
         private int selectedTab = 0;
         private int innerTabFrecuenciaOption = 1; // Default to "Procedimiento" for "Frecuencia"
@@ -23,6 +26,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
         private string searchString = "";
         private ProcedimientoDto selectedItem = null;
         private bool dense = true;
+        private ProcedimientosRedis procedimientosRedis;
 
         //protected override async Task OnInitializedAsync()
         //{
@@ -49,19 +53,24 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
         public void SetInnerTabFrecuencia(int tab)
         {
             innerTabFrecuenciaOption = tab;
-            CargarProcedimiento(ConvenioModel.Id, (long)ConfigurationKeys.TipoControl.Frecuencia);
+            Model.TipoControl = (long)ConfigurationKeys.TipoControl.Frecuencia;
+            CargarProcedimiento(Model.Id, Model.TipoControl);
+            SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
 
         }
 
         private void SetInnerTabAutorizaciones(int tab)
         {
             innerTabAutorizacionesOption = tab;
-            CargarProcedimiento(ConvenioModel.Id, (long)ConfigurationKeys.TipoControl.Autorizaciones);
+            Model.TipoControl = (long)ConfigurationKeys.TipoControl.Autorizaciones;
+            CargarProcedimiento(Model.Id, Model.TipoControl);
+            SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
 
         }
 
         public void BtnProceFrecuenciaNuevoClick()
         {
+
             isAnularDisabledProceFrecuencia = false;
             isNuevoDisabledProceFrecuencia = true;
             isComponentConsultaProceFrecuencia = false;
@@ -132,5 +141,24 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             listaProceFrecuenciaDTO = (await _ConveniosSAMService.ObtenerProcedimientoFrecuencia(ConvenioId, tipo))?.ToList() ?? new List<ProcedimientoDto>();
             StateHasChanged();
         }
+
+        private async Task GuardarFormularioCliente(ProcedimientoDto formCliente)
+        {
+            StateHasChanged();
+            Model.ProcedimientoId = formCliente.Id;
+
+            await _ConveniosSAMService.ActivarProcedimiento(Model.Id, Model.TipoControl, (long)Model.ProcedimientoId);
+
+            if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Frecuencia)
+            {
+                SetInnerTabFrecuencia(innerTabFrecuenciaOption);
+            }
+            else if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Autorizaciones)
+            {
+                SetInnerTabAutorizaciones(innerTabAutorizacionesOption);
+            }
+        }
+
+
     }
 }

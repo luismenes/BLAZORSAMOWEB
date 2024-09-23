@@ -1,9 +1,15 @@
-﻿using static BlazorServer.Business.BLL.ProcedimientoSamo;
+﻿using BlazorServer.DTO.Request.Contratacion;
+using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using static BlazorServer.Business.BLL.ProcedimientoSamo;
 
 namespace BlazorServer.Presentation.Shared.GlobalesComponet
 {
     public partial class ProcedimientosRedis
     {
+        [Parameter]
+        public EventCallback<ProcedimientoDto> SetContinue { get; set; }
+
         private int paginaActual = 1;
         private int totalPaginas = 1;
         private const int tamañoPagina = 10;
@@ -11,6 +17,7 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
         private bool mostrarMensaje = false;
         private string codigo;
         private string nombre;
+
         protected override async Task OnInitializedAsync()
         {
             _swaAlerts.ShowLoading();
@@ -51,20 +58,58 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
 
         private async Task AsignarProcedimiento(long id)
         {
-            //bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
+            bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
 
-            //if (confirmacion)
-            //{
+            if (confirmacion)
+            {
 
-            //    bool resultado = await _ConveniosSAMService.CambiarEstadoConvenio(id, Convert.ToInt64(AuthorizationService.UrlParametersDTO.UserId));
+                cargarDatos(id);
+                //if (resultado)
+                //{
+                //    // Mostrar un mensaje de éxito
+                //    await MostrarMensajeExitoso("El estado del convenio ha sido cambiado exitosamente.");
+                //}
+                await CargarDatos();
+            }
+        }
 
-            //    if (resultado)
-            //    {
-            //        // Mostrar un mensaje de éxito
-            //        await MostrarMensajeExitoso("El estado del convenio ha sido cambiado exitosamente.");
-            //    }
-            //    await CargarDatos();
-            //}
+        public async void cargarDatos(long Id)
+        {
+            
+            var resultado = await _IProcedimientoSamo.ObtenerProcedimeinto(Id);
+
+            if (resultado != null)
+            {
+
+
+                ProcedimientoDto clienteRequest = new ProcedimientoDto();
+                clienteRequest.Id = resultado.Id;
+
+
+                _swaAlerts.ShowLoadingClose();
+                await SetContinue.InvokeAsync(clienteRequest);
+            }
+            StateHasChanged();
+
+        }
+
+        public async Task<bool> MostrarConfirmacion(string mensaje)
+        {
+            var options = new
+            {
+                title = mensaje,
+                icon = "warning",
+                showCancelButton = true,
+                confirmButtonText = "Sí, cambiar estado",
+                cancelButtonText = "Cancelar",
+                confirmButtonColor = "#d33", // Rojo para el botón de confirmación
+                cancelButtonColor = "#3085d6" // Azul para el botón de cancelar
+            };
+
+            // La llamada a InvokeAsync debería recibir el tipo adecuado, que es un booleano
+            var result = await JSRuntime.InvokeAsync<bool>("mostrarConfirmacion", options);
+
+            return result; // Devuelve true si el usuario confirma la acción
         }
     }
 }

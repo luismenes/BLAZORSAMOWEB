@@ -25,5 +25,7 @@ namespace BlazorServer.Business.Interfaces.Contratacion
 
         Task<IEnumerable<ProcedimientoDto>> ObtenerProcedimientoFrecuencia(long? convenioId, long tipo);
 
+        Task<bool> ActivarProcedimiento(long convenioId, long tipo, long procedimientoId);
+
     }
 }

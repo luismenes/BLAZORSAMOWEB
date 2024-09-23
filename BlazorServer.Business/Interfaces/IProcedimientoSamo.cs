@@ -11,6 +11,6 @@ namespace BlazorServer.Business.Interfaces
     public interface IProcedimientoSamo
     {
         Task<PaginacionResult<ProcedimientoDto>> ObtenerProcedimeintos(string Codigo, string nombre, int pagina, int tamañoPagina);
-
+        Task<ProcedimientoDto> ObtenerProcedimeinto(long procedimeintoID);
     }
 }

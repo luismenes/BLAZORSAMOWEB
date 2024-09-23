@@ -15,6 +15,9 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueControlConveniosConfig { get; set; }
+
+        [Parameter]
+        public ConvenioDTO Model { get; set; }
         private bool showForm1 = false;
         private bool showForm2 = false;
         private bool showForm3 = false;
@@ -66,7 +69,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             }
             else if (showForm2)
             {
-                await ConfigControl(ConvenioModel);
+                await ConfigControlActive(ConvenioModel);
             }
         }
 
@@ -156,10 +159,25 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             controlConveniosConfig.ConvenioModel = formCliente;
             controlConveniosConfig.SetInnerTabFrecuencia(1);
             StateHasChanged();
-
+            showForm2 = false;
 
         }
 
+        public async Task ConfigControlActive(ConvenioDTO formCliente)
+        {
 
+            StateHasChanged();
+            controlConveniosConfig.ConvenioModel = formCliente;
+            controlConveniosConfig.SetInnerTabFrecuencia(1);
+            StateHasChanged();
+
+        }
+
+        public async Task AsignarValoresConvenio(ConvenioDTO convenio)
+        {
+            StateHasChanged();
+            controlConveniosConfig.ConvenioModel = convenio;
+
+        }
     }
 }
