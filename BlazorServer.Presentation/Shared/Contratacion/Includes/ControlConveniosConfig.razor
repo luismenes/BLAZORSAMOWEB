@@ -130,7 +130,7 @@
 
                                                                         <MudTd>
                                                                             <button class="@context.EstadoColor"
-                                                                            @onclick="() => CambiarEstadoProceFrecuencia(context.Id)"
+                                                                            @onclick="() => CambiarEstadoProcedimiento(context.Id)"
                                                                             title="@context.EstadoTooltip">
                                                                                 <i class="@context.IconClass"></i>
                                                                             </button>
@@ -175,6 +175,8 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                             }
                         </MudItem>
                     </MudGrid>
@@ -236,6 +238,78 @@
                                                     <li class="breadcrumb-item active">Procedimiento/Autorizaciones</li>
                                                 </ol>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-12">
+
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+
+                                            @if (isComponentConsultaProceAutorizacion)
+                                            {
+                                                <div class="col-lg-12">
+                                                    <MudCard>
+                                                        <div class="card">
+                                                            <div class="card-body align-items-center d-flex">
+                                                                <h4 class="card-title mb-0 flex-grow-1">
+                                                                    <MudItem xs="0">
+                                                                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Warning" Class="mb-2" Icon="@Icons.Material.Filled.Add" Disabled="@isNuevoDisabledProceAutorizacion" @onclick="BtnProceAutorizacionNuevoClick" Title="Nuevo Registro">
+                                                                            <MudIcon Icon="@Icons.Filled.AddBox" Size="Size.Large" />
+                                                                        </MudButton>
+                                                                        <MudButton Variant="MudBlazor.Variant.Outlined" Color="Color.Error" Class="mb-2" Icon="@Icons.Material.Filled.Cancel" Disabled="@isAnularDisabledProceAutorizacion" @onclick="BtnProceAutorizacionAnularClick" Title="Anular Registro">
+                                                                            <MudIcon Icon="@Icons.Filled.Block" Size="Size.Large" />
+                                                                        </MudButton>
+                                                                    </MudItem>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                    </MudCard>
+                                                </div>
+                                                <div class="row align-items-end">
+                                                    <div class="form-container">
+                                                        <div class="card-body">
+                                                            <div class="table-responsive">
+
+                                                                <MudTable Items="@listaProceAutorizacionDTO" Dense="@dense" Filter="FilterFunc" @bind-SelectedItem="selectedItem">
+                                                                    <ToolBarContent>
+                                                                        <MudSpacer />
+                                                                        <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                                                                    </ToolBarContent>
+                                                                    <HeaderContent>
+                                                                        <MudTh>Nombre </MudTh>
+                                                                        <MudTh>Tipo </MudTh>
+                                                                        <MudTh>Acciones</MudTh>
+                                                                    </HeaderContent>
+                                                                    <RowTemplate>
+                                                                        <MudTd>@context.Nombre</MudTd>
+                                                                        <MudTd>@context.Tipo</MudTd>
+
+                                                                        <MudTd>
+                                                                            <button class="@context.EstadoColor"
+                                                                            @onclick="() => CambiarEstadoProcedimiento(context.Id)"
+                                                                            title="@context.EstadoTooltip">
+                                                                                <i class="@context.IconClass"></i>
+                                                                            </button>
+                                                                        </MudTd>
+                                                                    </RowTemplate>
+                                                                    <PagerContent>
+                                                                        <MudTablePager />
+                                                                    </PagerContent>
+                                                                </MudTable>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else if (isComponentAddProceAutorizacion)
+                                            {
+                                                <ProcedimientosRedis @ref="procedimientosRedis" SetContinue="GuardarFormularioCliente"></ProcedimientosRedis>
+                                            }
                                         </div>
                                     </div>
                                 </div>

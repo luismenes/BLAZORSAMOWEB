@@ -23,11 +23,15 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
         private bool isComponentAddProceFrecuencia = false;
         public ConvenioDTO ConvenioModel = new ConvenioDTO();
         private IEnumerable<ProcedimientoDto> listaProceFrecuenciaDTO = new List<ProcedimientoDto>();
+        private IEnumerable<ProcedimientoDto> listaProceAutorizacionDTO = new List<ProcedimientoDto>();
         private string searchString = "";
         private ProcedimientoDto selectedItem = null;
         private bool dense = true;
         private ProcedimientosRedis procedimientosRedis;
-
+        private bool isAnularDisabledProceAutorizacion = true;
+        private bool isNuevoDisabledProceAutorizacion = false;
+        private bool isComponentConsultaProceAutorizacion = false;
+        private bool isComponentAddProceAutorizacion = false;
         //protected override async Task OnInitializedAsync()
         //{
         //    _swaAlerts.ShowLoading();
@@ -65,11 +69,13 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
 
         private async Task SetInnerTabAutorizaciones(int tab)
         {
+            LimpiarFormularioAutorizacion();
             innerTabAutorizacionesOption = tab;
             Model.TipoControl = (long)ConfigurationKeys.TipoControl.Autorizaciones;
             await CargarProcedimiento(Model.Id, Model.TipoControl);
             await SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
             StateHasChanged();
+            isComponentConsultaProceAutorizacion = true;
 
         }
 
@@ -83,11 +89,25 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
 
         }
 
+        public void BtnProceAutorizacionNuevoClick()
+        {
+
+            isAnularDisabledProceAutorizacion = false;
+            isNuevoDisabledProceAutorizacion = true;
+            isComponentConsultaProceAutorizacion = false;
+            isComponentAddProceAutorizacion = true;
+
+        }
 
 
         private void BtnProceFrecuenciaAnularClick()
         {
             LimpiarFormulario();
+        }
+
+        private void BtnProceAutorizacionAnularClick()
+        {
+            LimpiarFormularioAutorizacion();
         }
 
         private void LimpiarFormulario()
@@ -97,6 +117,16 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             isNuevoDisabledProceFrecuencia = false;
             isComponentConsultaProceFrecuencia = true;
             isComponentAddProceFrecuencia = false;
+
+        }
+
+        private void LimpiarFormularioAutorizacion()
+        {
+
+            isAnularDisabledProceAutorizacion = true;
+            isNuevoDisabledProceAutorizacion = false;
+            isComponentConsultaProceAutorizacion = true;
+            isComponentAddProceAutorizacion = false;
 
         }
 
@@ -123,7 +153,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             return false;
         }
 
-        private async Task CambiarEstadoProceFrecuencia(long id)
+        private async Task CambiarEstadoProcedimiento(long id)
         {
             //bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
 
@@ -146,7 +176,19 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             StateHasChanged();
             var resultado = await _ConveniosSAMService.ObtenerProcedimientoFrecuencia(ConvenioId, tipo);
 
-            listaProceFrecuenciaDTO = resultado?.ToList();
+
+            if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Frecuencia)
+            {
+                listaProceFrecuenciaDTO = resultado?.ToList();
+
+
+            }
+            else if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Autorizaciones)
+            {
+                listaProceAutorizacionDTO = resultado?.ToList();
+
+            }
+
             StateHasChanged();
 
         }
