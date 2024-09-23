@@ -16,6 +16,10 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public EventCallback<ConvenioDTO> SetContinue { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
+
+        [Parameter]
+        public EventCallback<ConvenioDTO> SetContinueControlConveniosConfig { get; set; }
+
         private List<ConveDto> listaConvenios = new List<ConveDto>();
         private ConvenioAdd convenioAdd;
         ConvenioConfig convenioConfig;
@@ -274,7 +278,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         {
 
             var resultado = await _ConveniosSAMService.EditarConvenio(id);
-            await SetContinueConfig.InvokeAsync(resultado);
+            await SetContinueControlConveniosConfig.InvokeAsync(resultado);
 
 
         }
@@ -285,6 +289,20 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             StateHasChanged();
 
             convenioConfig.ConvenioModel = formCliente;
+
+
+            StateHasChanged();
+
+        }
+
+        public async Task ConfigConvenioRdControl(ConvenioDTO formCliente)
+        {
+            BtnConfigConvenio();
+            StateHasChanged();
+
+            convenioConfig.ConvenioModel = formCliente;
+            await convenioConfig.ConfigControl(formCliente);
+
 
             StateHasChanged();
 

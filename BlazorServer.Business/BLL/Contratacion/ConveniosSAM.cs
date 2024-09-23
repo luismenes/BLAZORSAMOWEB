@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static BlazorServer.Business.BLL.ProcedimientoSamo;
 
 namespace BlazorServer.Business.BLL.Contratacion
 {
@@ -294,6 +295,36 @@ namespace BlazorServer.Business.BLL.Contratacion
                 // Guardar cambios en la base de datos
                 await db.SaveChangesAsync();
                 return convenioSede?.Activo ?? true;
+            }
+        }
+
+        public async Task<IEnumerable<ProcedimientoSamo.ProcedimientoDto>> ObtenerProcedimientoFrecuencia(long? convenioId, long tipo)
+        {
+            using (SamoContext db = new SamoContext())
+            {
+                var convenioControl = await db.ConvenioControlProcedimientos.Where(s => s.Activo && s.TipoControlId == tipo).ToListAsync();
+                var result = from c in convenioControl
+                             select new ProcedimientoDto
+                             {
+                                 Id = c.Id,
+                                 Nombre = "(" + c.Procedimiento.Codigo + ") -" + c.Procedimiento.Nombre,
+                                 Tipo = c.Procedimiento.TipoProcedimiento.Nombre,
+                                 Activo = c != null ? c.Activo : false, // Si no hay ConvenioSede, lo marcamos como inactivo
+                                 EstadoClass = c != null && c.Activo == true
+                                     ? "alert alert-success my-auto text-uppercase"
+                                     : "alert alert-danger my-auto text-uppercase",
+                                 EstadoTooltip = c != null && c.Activo == true
+                                     ? "Inactivar"
+                                     : "Activar",
+                                 EstadoColor = c != null && c.Activo == true
+                                     ? "btn btn-outline-danger btn-icon waves-effect waves-light"
+                                     : "btn btn-outline-success btn-icon waves-effect waves-light",
+                                 IconClass = c != null && !c.Activo == true
+                                     ? "las la-check-circle"
+                                     : "las la-exclamation-circle",
+                             };
+
+                return result.ToList(); // Aquí simplemente usamos ToList()
             }
         }
     }

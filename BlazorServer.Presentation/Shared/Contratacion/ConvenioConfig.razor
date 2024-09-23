@@ -19,114 +19,133 @@
         </div>
         <div class="row">
             <!-- Columnas para las tarjetas -->
-            <div class="col-lg-3">
+            <div class="@menuColumnClass">
                 <div class="card">
-                    <MudContainer>
-                        <div class="d-flex flex-column gap-2" style="max-width: 250px;">
-                            <!-- Card 1 -->
-                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(1)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.ShareLocation" Size="Size.Large" /> <!-- Icono para "Sedes" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Sedes</h6>
-                                        </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                    <MudCard Class="mb-2">
+                        <MudCardActions>
+                            <MudButton Color="Color.Primary" Variant="MudBlazor.Variant.Outlined" @onclick="ToggleMenu">
+                                @if (isMenuExpanded)
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.ExpandLess" />
 
-                            <!-- Card 2 -->
-                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(2)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Secondary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.Diversity3" Size="Size.Large" /> <!-- Icono para "Controles" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Controles</h6>
-                                        </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                                }
+                                else
+                                {
+                                    <MudIcon Icon="@Icons.Material.Filled.ExpandMore" />
+                                }
+                            </MudButton>
+                        </MudCardActions>
+                    </MudCard>
 
-                            <!-- Card 3 -->
-                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(3)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Warning" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Recaudos</h6>
-                                        </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                    <MudCollapse Expanded="@isMenuExpanded">
 
-                            <!-- Card 4 -->
-                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(4)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Error" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.BackupTable" Size="Size.Large" /> <!-- Icono para "Facturación" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Facturación</h6>
+                        <MudContainer>
+                            <div class="d-flex flex-column gap-2" style="max-width: 250px;">
+                                <!-- Card 1 -->
+                                <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(1)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Primary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.ShareLocation" Size="Size.Large" /> <!-- Icono para "Sedes" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Sedes</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                                    </MudCardContent>
+                                </MudCard>
 
-                            <!-- Card 5 -->
-                            <MudCard Class="custom-card" Style="width: 100%; background-color:#e4e5e5;cursor: pointer;" @onclick="() => ToggleForm(5)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Tertiary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.GpsFixed" Size="Size.Large" /> <!-- Icono para "Controles" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Cobertura</h6>
+                                <!-- Card 2 -->
+                                <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(2)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Secondary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.Diversity3" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Controles</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                                    </MudCardContent>
+                                </MudCard>
 
-                            <!-- Card 6 -->
-                            <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(6)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Surface" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.SensorOccupied" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Contactos</h6>
+                                <!-- Card 3 -->
+                                <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(3)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Warning" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Recaudos</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
+                                    </MudCardContent>
+                                </MudCard>
 
-                            <!-- Card 7 -->
-                            <MudCard Class="custom-card" Style="width: 100%; background-color:#7b9392; cursor: pointer;" @onclick="() => ToggleForm(7)">
-                                <MudCardContent>
-                                    <div class="d-flex align-items-center gap-2">
-                                        <MudAvatar Color="Color.Info" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
-                                            <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
-                                        </MudAvatar>
-                                        <div>
-                                            <h6 class="mb-1">Centros de Costos</h6>
+                                <!-- Card 4 -->
+                                <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(4)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Error" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.BackupTable" Size="Size.Large" /> <!-- Icono para "Facturación" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Facturación</h6>
+                                            </div>
                                         </div>
-                                    </div>
-                                </MudCardContent>
-                            </MudCard>
-                        </div>
-                    </MudContainer>
+                                    </MudCardContent>
+                                </MudCard>
+
+                                <!-- Card 5 -->
+                                <MudCard Class="custom-card" Style="width: 100%; background-color:#e4e5e5;cursor: pointer;" @onclick="() => ToggleForm(5)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Tertiary" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.GpsFixed" Size="Size.Large" /> <!-- Icono para "Controles" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Cobertura</h6>
+                                            </div>
+                                        </div>
+                                    </MudCardContent>
+                                </MudCard>
+
+                                <!-- Card 6 -->
+                                <MudCard Class="custom-card" Style="width: 100%;background-color:#e4e5e5; cursor: pointer;" @onclick="() => ToggleForm(6)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Surface" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.SensorOccupied" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Contactos</h6>
+                                            </div>
+                                        </div>
+                                    </MudCardContent>
+                                </MudCard>
+
+                                <!-- Card 7 -->
+                                <MudCard Class="custom-card" Style="width: 100%; background-color:#7b9392; cursor: pointer;" @onclick="() => ToggleForm(7)">
+                                    <MudCardContent>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <MudAvatar Color="Color.Info" Variant="MudBlazor.Variant.Filled" Size="Size.Medium">
+                                                <MudIcon Icon="@Icons.Material.Rounded.Adjust" Size="Size.Large" /> <!-- Icono para "Recaudos" -->
+                                            </MudAvatar>
+                                            <div>
+                                                <h6 class="mb-1">Centros de Costos</h6>
+                                            </div>
+                                        </div>
+                                    </MudCardContent>
+                                </MudCard>
+                            </div>
+                        </MudContainer>
+                    </MudCollapse>
                 </div>
             </div>
 
             <!-- Columnas para los formularios -->
-            <div class="col-lg-9">
+            <div class="@formColumnClass">
                 <div class="card h-100">
                     <div class="form-content">
                         <!-- Formulario 1 -->
@@ -193,7 +212,7 @@
                         <!-- Formulario 2 -->
                         @if (showForm2)
                         {
-                           <ControlConveniosConfig></ControlConveniosConfig>
+                            <ControlConveniosConfig @ref="controlConveniosConfig"></ControlConveniosConfig>
                         }
 
                         <!-- Formulario 3 -->

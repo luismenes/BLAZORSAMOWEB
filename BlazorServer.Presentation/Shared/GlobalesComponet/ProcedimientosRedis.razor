@@ -1,0 +1,75 @@
+﻿@inject IProcedimientoSamo _IProcedimientoSamo
+
+<MudCard>
+    <MudCardContent>
+        <MudText Class="strong" typ="h4"><strong>PROCEDIMIENTOS</strong> </MudText>
+        <div class="card-header d-flex align-items-center highlight-toolbar bg-light ps-3 pe-2 py-1">
+            <h4 class="font-monospace text-muted text-uppercase"><strong>Filtros</strong></h4>
+        </div>
+        <MudGrid>
+            <MudItem xs="12" md="6">
+
+                <MudText Typo="Typo.subtitle2" Class="mb-1">Codigo:</MudText>
+                <MudTextField ValueChanged="@(async (string e) => await OnStringChanged(e))"
+                              Variant="MudBlazor.Variant.Outlined" />
+            </MudItem>
+
+            <MudItem xs="12" md="6">
+
+                <MudText Typo="Typo.subtitle2" Class="mb-1">Nombre:</MudText>
+                <MudTextField ValueChanged="@(async (string e) => await OnStringChanged2(e))"
+                              Variant="MudBlazor.Variant.Outlined" />
+            </MudItem>
+
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+@if (mostrarMensaje)
+{
+    <MudAlert Severity="Severity.Info">
+        ***** No se encuentran registros *****
+    </MudAlert>
+}
+else
+{
+
+
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <MudTable Items="@listaProcedimientoDto" Dense="true" Class="table table-hover w-100 dataTable">
+                <HeaderContent>
+
+                    <MudTh>Nombre </MudTh>
+                    <MudTh>Tipo </MudTh>
+                    <MudTh>Acciones</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd Class="name-column">@context.Nombre</MudTd>
+                    <MudTd>@context.Tipo</MudTd>
+
+                    <MudTd>
+
+                        <button class="btn btn-outline-info btn-icon waves-effect waves-light"
+                            @onclick="() => AsignarProcedimiento(context.Id)"
+                            title="ASIGNAR">
+                            <i class="fa fa-check-circle fa-1x"></i>
+                        </button>
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        </div>
+        <!-- Paginación -->
+        <div class="d-flex justify-content-center mt-4">
+            <MudPagination ShowFirstButton="true" ShowLastButton="true"
+                       Variant="MudBlazor.Variant.Outlined"
+                       Size="Size.Small"
+                       Color="Color.Info"
+                       Count="@totalPaginas"
+                       SelectedChanged="OnPageChanged"
+                       Selected="@paginaActual" />
+        </div>
+    </div>
+
+}

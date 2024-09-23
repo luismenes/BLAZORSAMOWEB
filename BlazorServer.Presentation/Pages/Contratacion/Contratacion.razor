@@ -11,7 +11,7 @@
 
 @if (AuthorizationService.IsAuthorized == true)
 {
-    <ConvenioAll @ref="convenioAll" SetContinueConfig="ConfigConvenio" SetContinue="EditarFormularioCliente"></ConvenioAll>
+    <ConvenioAll @ref="convenioAll" SetContinueConfig="ConfigConvenio" SetContinue="EditarFormularioCliente" SetContinueControlConveniosConfig="ConfigConvenioControl"></ConvenioAll>
 }
 else
 {

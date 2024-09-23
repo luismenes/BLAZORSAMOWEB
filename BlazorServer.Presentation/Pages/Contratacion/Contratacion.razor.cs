@@ -39,6 +39,17 @@ namespace BlazorServer.Presentation.Pages.Contratacion
             if (convenioAll != null)
             {
                 await convenioAll.ConfigConvenioRd(formCliente);
+
+            }
+
+        }
+
+        private async Task ConfigConvenioControl(ConvenioDTO formCliente)
+        {
+            if (convenioAll != null)
+            {
+                await convenioAll.ConfigConvenioRdControl(formCliente);
+
             }
 
         }

@@ -1,5 +1,6 @@
 ﻿using BlazorServer.DTO.Request;
 using BlazorServer.DTO.Request.Contratacion;
+using BlazorServer.Presentation.Shared.Contratacion.Includes;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
@@ -12,6 +13,8 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         public UrlParametersDTO urlParametersDTO { get; set; }
         [Parameter]
         public EventCallback<ConvenioDTO> SetContinueConfig { get; set; }
+        [Parameter]
+        public EventCallback<ConvenioDTO> SetContinueControlConveniosConfig { get; set; }
         private bool showForm1 = false;
         private bool showForm2 = false;
         private bool showForm3 = false;
@@ -24,7 +27,27 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private string searchString = "";
         private SedeConvenioDTO selectedItem = null;
         private bool dense = true;
-      
+        private bool isMenuExpanded = true;
+        private string menuColumnClass => isMenuExpanded ? "col-lg-3" : "col-lg-1";
+        private string formColumnClass => isMenuExpanded ? "col-lg-9" : "col-lg-11";
+        private ControlConveniosConfig controlConveniosConfig;
+
+
+        protected override async Task OnInitializedAsync()
+        {
+            _swaAlerts.ShowLoading();
+            await ToggleForm(1);
+            _swaAlerts.ShowLoadingClose();
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                // El componente ha terminado de renderizarse
+                await Task.Delay(100); // Opcional: Un breve retraso para asegurar que todo esté listo
+            }
+        }
 
         private async Task ToggleForm(int formNumber)
         {
@@ -35,12 +58,16 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             showForm5 = formNumber == 5;
             showForm6 = formNumber == 6;
             showForm7 = formNumber == 7;
+            StateHasChanged();
 
             if (showForm1)
             {
                 await CargarDatosSedesConvenio(ConvenioModel.Id);
             }
-            StateHasChanged();
+            else if (showForm2)
+            {
+                await ConfigControl(ConvenioModel);
+            }
         }
 
         private string GetEstado(bool activo)
@@ -116,6 +143,23 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             return false;
         }
 
-        
+
+        private void ToggleMenu()
+        {
+            isMenuExpanded = !isMenuExpanded;
+        }
+
+        public async Task ConfigControl(ConvenioDTO formCliente)
+        {
+            showForm2 = true;
+            StateHasChanged();
+            controlConveniosConfig.ConvenioModel = formCliente;
+            controlConveniosConfig.SetInnerTabFrecuencia(1);
+            StateHasChanged();
+
+
+        }
+
+
     }
 }

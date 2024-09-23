@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static BlazorServer.Business.BLL.Contratacion.ConveniosSAM;
+using static BlazorServer.Business.BLL.ProcedimientoSamo;
 
 namespace BlazorServer.Business.Interfaces.Contratacion
 {
@@ -21,5 +22,8 @@ namespace BlazorServer.Business.Interfaces.Contratacion
         Task<IEnumerable<SedeConvenioDTO>> ObtenerSedes(long? convenioId);
 
         Task<bool> ActivarSede(long convenioId, long sedeId, long usuarioId);
+
+        Task<IEnumerable<ProcedimientoDto>> ObtenerProcedimientoFrecuencia(long? convenioId, long tipo);
+
     }
 }

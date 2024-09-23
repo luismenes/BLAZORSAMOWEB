@@ -17,6 +17,11 @@ namespace BlazorServer.Business.BLL
             public long Id { get; set; }
             public string Nombre { get; set; }
             public string Tipo { get; set; }
+            public bool Activo { get; set; }
+            public string EstadoClass { get; set; }
+            public string EstadoTooltip { get; set; }
+            public string EstadoColor { get; set; }
+            public string IconClass { get; set; }
 
         }
         public async Task<PaginacionResult<ProcedimientoDto>> ObtenerProcedimeintos(string codigo, string nombre, int pagina, int tamañoPagina)
@@ -37,7 +42,8 @@ namespace BlazorServer.Business.BLL
                     {
                         Id = c.Id,
                         Nombre = "(" + c.Codigo + ") -" + c.Nombre,
-                        Tipo = c.TipoProcedimiento.Nombre
+                        Tipo = c.TipoProcedimiento.Nombre,
+                        Activo = (bool)c.Activo
                     })
                     .OrderBy(x => x.Id)
                     .ToListAsync();
