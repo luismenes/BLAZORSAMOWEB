@@ -19,7 +19,7 @@ public partial class ConvenioSede
 
     public bool? Activo { get; set; }
 
-    public virtual Dato? Convenio { get; set; }
+    public virtual Convenio? Convenio { get; set; }
 
     public virtual Sede? Sede { get; set; }
 }

@@ -19,7 +19,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
         private int innerTabAutorizacionesOption = 1; // Default to "Procedimiento" for "Autorizaciones"
         private bool isAnularDisabledProceFrecuencia = true;
         private bool isNuevoDisabledProceFrecuencia = false;
-        private bool isComponentConsultaProceFrecuencia = true;
+        private bool isComponentConsultaProceFrecuencia = false;
         private bool isComponentAddProceFrecuencia = false;
         public ConvenioDTO ConvenioModel = new ConvenioDTO();
         private IEnumerable<ProcedimientoDto> listaProceFrecuenciaDTO = new List<ProcedimientoDto>();
@@ -50,21 +50,26 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             await JSRuntime.InvokeVoidAsync("localStorage.setItem", "selectedTab", index.ToString());
         }
 
-        public void SetInnerTabFrecuencia(int tab)
+        public async Task SetInnerTabFrecuencia(int tab)
         {
+            LimpiarFormulario();
             innerTabFrecuenciaOption = tab;
             Model.TipoControl = (long)ConfigurationKeys.TipoControl.Frecuencia;
-            CargarProcedimiento(Model.Id, Model.TipoControl);
-            SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
+            await CargarProcedimiento(Model.Id, Model.TipoControl);
+            StateHasChanged();
+            await SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
+            StateHasChanged();
+            isComponentConsultaProceFrecuencia = true;
 
         }
 
-        private void SetInnerTabAutorizaciones(int tab)
+        private async Task SetInnerTabAutorizaciones(int tab)
         {
             innerTabAutorizacionesOption = tab;
             Model.TipoControl = (long)ConfigurationKeys.TipoControl.Autorizaciones;
-            CargarProcedimiento(Model.Id, Model.TipoControl);
-            SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
+            await CargarProcedimiento(Model.Id, Model.TipoControl);
+            await SetContinueControlConveniosConfig.InvokeAsync(ConvenioModel);
+            StateHasChanged();
 
         }
 
@@ -138,8 +143,12 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
 
         public async Task CargarProcedimiento(long ConvenioId, long tipo)
         {
-            listaProceFrecuenciaDTO = (await _ConveniosSAMService.ObtenerProcedimientoFrecuencia(ConvenioId, tipo))?.ToList() ?? new List<ProcedimientoDto>();
             StateHasChanged();
+            var resultado = await _ConveniosSAMService.ObtenerProcedimientoFrecuencia(ConvenioId, tipo);
+
+            listaProceFrecuenciaDTO = resultado?.ToList();
+            StateHasChanged();
+
         }
 
         private async Task GuardarFormularioCliente(ProcedimientoDto formCliente)
@@ -152,11 +161,14 @@ namespace BlazorServer.Presentation.Shared.Contratacion.Includes
             if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Frecuencia)
             {
                 SetInnerTabFrecuencia(innerTabFrecuenciaOption);
+                LimpiarFormulario();
+
             }
             else if (Model.TipoControl == (long)ConfigurationKeys.TipoControl.Autorizaciones)
             {
                 SetInnerTabAutorizaciones(innerTabAutorizacionesOption);
             }
+
         }
 
 

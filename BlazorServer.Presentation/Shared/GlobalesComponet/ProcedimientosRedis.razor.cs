@@ -58,17 +58,14 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
 
         private async Task AsignarProcedimiento(long id)
         {
-            bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere cambiar el estado?");
+            bool confirmacion = await MostrarConfirmacion("Esta segur@ que requiere asignar el procedimiento?");
 
             if (confirmacion)
             {
 
                 cargarDatos(id);
-                //if (resultado)
-                //{
-                //    // Mostrar un mensaje de éxito
-                //    await MostrarMensajeExitoso("El estado del convenio ha sido cambiado exitosamente.");
-                //}
+                await MostrarMensajeExitoso("El procedimiento ha sido asignado exitosamente.");
+
                 await CargarDatos();
             }
         }
@@ -111,5 +108,23 @@ namespace BlazorServer.Presentation.Shared.GlobalesComponet
 
             return result; // Devuelve true si el usuario confirma la acción
         }
+
+        private async Task MostrarMensajeExitoso(string mensaje)
+        {
+            var options = new
+            {
+                title = mensaje,
+                icon = "success",
+                confirmButtonText = "Entendido",
+                confirmButtonColor = "#28a745", // Verde para mensajes de éxito
+                customClass = new
+                {
+                    confirmButton = "btn-success"
+                }
+            };
+
+            await JSRuntime.InvokeVoidAsync("Swal.fire", options);
+        }
+
     }
 }

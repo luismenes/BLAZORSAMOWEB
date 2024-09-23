@@ -109,7 +109,6 @@ public partial class SamoContext : DbContext
     .AddJsonFile("appsettings.json").Build();
         optionsBuilder.UseSqlServer(configuration.GetConnectionString("DBConectionString"));
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Acceso>(entity =>
@@ -362,7 +361,7 @@ public partial class SamoContext : DbContext
 
             entity.HasOne(d => d.Convenio).WithMany(p => p.ConvenioSedes)
                 .HasForeignKey(d => d.ConvenioId)
-                .HasConstraintName("FK_ConvenioSede_Dato");
+                .HasConstraintName("FK_ConvenioSede_Convenio");
 
             entity.HasOne(d => d.Sede).WithMany(p => p.ConvenioSedes)
                 .HasForeignKey(d => d.SedeId)

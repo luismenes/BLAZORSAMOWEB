@@ -25,7 +25,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
         private bool showForm5 = false;
         private bool showForm6 = false;
         private bool showForm7 = false;
-        private IEnumerable<SedeConvenioDTO> listaSedeConvenioDTO = new List<SedeConvenioDTO>();
+        private IEnumerable<SedeConvenioDTO> listaSedeConvenioDTO;
         public ConvenioDTO ConvenioModel = new ConvenioDTO();
         private string searchString = "";
         private SedeConvenioDTO selectedItem = null;
@@ -71,6 +71,9 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             {
                 await ConfigControlActive(ConvenioModel);
             }
+
+            StateHasChanged();
+
         }
 
         private string GetEstado(bool activo)
@@ -99,14 +102,20 @@ namespace BlazorServer.Presentation.Shared.Contratacion
                 }
                 StateHasChanged();
                 await CargarDatosSedesConvenio(ConvenioModel.Id);
+                StateHasChanged();
+
             }
         }
 
         private async Task CargarDatosSedesConvenio(long ConvenioId)
         {
-            var resultado = await _ConveniosSAMService.ObtenerSedes(ConvenioId);
-            listaSedeConvenioDTO = (await _ConveniosSAMService.ObtenerSedes(ConvenioId))?.ToList() ?? new List<SedeConvenioDTO>();
-            StateHasChanged();
+            if (ConvenioId != 0)
+            {
+
+                var resultado = await _ConveniosSAMService.ObtenerSedes(ConvenioId);
+                listaSedeConvenioDTO = (await _ConveniosSAMService.ObtenerSedes(ConvenioId))?.ToList() ?? new List<SedeConvenioDTO>();
+                StateHasChanged();
+            }
         }
 
         public async Task<bool> MostrarConfirmacion(string mensaje)
@@ -157,6 +166,7 @@ namespace BlazorServer.Presentation.Shared.Contratacion
             showForm2 = true;
             StateHasChanged();
             controlConveniosConfig.ConvenioModel = formCliente;
+            StateHasChanged();
             controlConveniosConfig.SetInnerTabFrecuencia(1);
             StateHasChanged();
             showForm2 = false;
@@ -165,10 +175,11 @@ namespace BlazorServer.Presentation.Shared.Contratacion
 
         public async Task ConfigControlActive(ConvenioDTO formCliente)
         {
-
+            showForm2 = true;
             StateHasChanged();
             controlConveniosConfig.ConvenioModel = formCliente;
-            controlConveniosConfig.SetInnerTabFrecuencia(1);
+            StateHasChanged();
+            await controlConveniosConfig.SetInnerTabFrecuencia(1);
             StateHasChanged();
 
         }

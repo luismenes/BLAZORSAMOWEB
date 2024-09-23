@@ -302,13 +302,22 @@ namespace BlazorServer.Business.BLL.Contratacion
         {
             using (SamoContext db = new SamoContext())
             {
-                var convenioControl = await db.ConvenioControlProcedimientos.Where(s => s.Activo && s.TipoControlId == tipo).ToListAsync();
+                // Obtener el control del convenio
+                var convenioControl = await db.ConvenioControlProcedimientos
+                    .Where(s => s.Activo && s.TipoControlId == tipo && s.ConvenioId == convenioId)
+                    .Include(c => c.Procedimiento)  // Asegúrate de hacer un Include de las entidades relacionadas
+                    .Include(c => c.Procedimiento.TipoProcedimiento)
+                    .ToListAsync();
+
+                // Proyección a ProcedimientoDto
                 var result = from c in convenioControl
                              select new ProcedimientoDto
                              {
                                  Id = c.Id,
-                                 Nombre = "(" + c.Procedimiento.Codigo + ") -" + c.Procedimiento.Nombre,
-                                 Tipo = c.Procedimiento.TipoProcedimiento.Nombre,
+                                 Nombre = c?.Procedimiento != null && c.Procedimiento.Codigo != null && c.Procedimiento.Nombre != null
+                                     ? "(" + c.Procedimiento.Codigo + ") -" + c.Procedimiento.Nombre
+                                     : "N/A", // Valor predeterminado si alguna propiedad es nula
+                                 Tipo = c?.Procedimiento?.TipoProcedimiento?.Nombre ?? "Desconocido", // Si es null, asigna un valor predeterminado
                                  Activo = c != null ? c.Activo : false, // Si no hay ConvenioSede, lo marcamos como inactivo
                                  EstadoClass = c != null && c.Activo == true
                                      ? "alert alert-success my-auto text-uppercase"
@@ -324,9 +333,10 @@ namespace BlazorServer.Business.BLL.Contratacion
                                      : "las la-exclamation-circle",
                              };
 
-                return result.ToList(); // Aquí simplemente usamos ToList()
+                return result.ToList(); // Convertir a lista y retornar
             }
         }
+
 
         public async Task<bool> ActivarProcedimiento(long convenioId, long tipo, long procedimientoId)
         {
@@ -337,7 +347,7 @@ namespace BlazorServer.Business.BLL.Contratacion
 
                 if (Obj != null)
                 {
-                    Obj.Activo = !Obj.Activo;
+                    Obj.Activo = Obj.Activo;
                     Obj.FechaCreacion = DateTime.Now;
                     db.ConvenioControlProcedimientos.Update(Obj);
                 }
